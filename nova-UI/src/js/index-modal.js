@@ -1,8 +1,3 @@
-// Sidebar toggle functionality
-function toggleSidebar() {
-  document.querySelector('.sidebar').classList.toggle('collapsed');
-}
-
 // Modal functionality
 const modal = document.getElementById('modal');
 const modalTitle = document.getElementById('modal-title');
@@ -28,7 +23,7 @@ function openModal(title, content, icon) {
 
   // Special handling for AI Model Management
   if (title === 'AI Model Management') {
-    fetch('model-modal.html')
+    fetch('html/model-modal.html')
       .then(res => res.text())
       .then(html => {
         modalTitle.innerText = icon + ' ' + title;
@@ -36,7 +31,7 @@ function openModal(title, content, icon) {
         modal.classList.remove('hidden');
 
         const script = document.createElement('script');
-        script.src = 'model-modal.js';
+        script.src = 'js/model-modal.js';
         script.onload = () => refreshModels();
         document.body.appendChild(script);
       });

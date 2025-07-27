@@ -33,7 +33,7 @@ def verify_password(stored_hash, password):
 
 # Function to create a JWT token
 def create_jwt_token(username: str):
-    expiration = timedelta(minutes=10)  # Token expires in 1 minute
+    expiration = timedelta(minutes=1)  # Token expires in 1 minute
     payload = {
         "sub": username,
         "exp": datetime.utcnow() + expiration

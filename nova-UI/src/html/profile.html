@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nova - Chat</title>
-  <link rel="icon" href="assets/novafavicon.png" type="image/png" />
-  <link rel="stylesheet" href="css/styles-4k.css" />
-  <link rel="stylesheet" href="css/styles-hd.css" />
-  <link rel="stylesheet" href="css/styles-small.css" />
-  <link rel="stylesheet" href="css/chat.css" />
+  <title>Nova - Profile</title>
+  <link rel="icon" href="../assets/novafavicon.png" type="image/png">
+  <link rel="stylesheet" href="../css/styles-4k.css" />
+  <link rel="stylesheet" href="../css/styles-hd.css" />
+  <link rel="stylesheet" href="../css/styles-small.css" />
 </head>
 <body class="dark">
   <div class="app-container">
+
     <!-- Sidebar -->
     <aside class="sidebar collapsed">
       <div class="toggle-btn" onclick="toggleSidebar()">
@@ -38,54 +38,37 @@
       </nav>
     </aside>
 
-    <!-- Main -->
+    <!-- Main content area -->
     <main>
+      <!-- Top bar -->
       <header class="top-bar">
-        <h1>Chat <span id="current-model" style="font-size: 0.6em; opacity: 0.6"></span></h1>
+        <h1>Profile</h1>
+        <div class="top-controls">
+          <span class="material-symbols-outlined">search</span>
+          <span class="material-symbols-outlined">mic</span>
+          <span class="material-symbols-outlined">more_vert</span>
+        </div>
       </header>
 
+      <!-- Page content -->
       <section class="content">
-        <div id="chat-window"></div>
-
-        <div id="input-area">
-          <textarea id="user-input" rows="4" placeholder="Type your message here..."></textarea>
-          <button onclick="sendMessage()">Send</button>
-        </div>
-
-        <div id="voice-controls">
-          <button onclick="toggleListen()">🔊 Listen</button>
-          <button onclick="toggleSpeak()">🎙 Speak</button>
-        </div>
-
-        <div id="model-controls">
-          <button id="clear-chat-btn">🗑 Clear</button>
-          <div id="custom-model-dropdown" class="dropdown">
-            <button
-              id="dropdown-button"
-              class="dropdown-button"
-              aria-haspopup="listbox"
-              aria-expanded="false"
-            >
-              <span id="dropdown-selected"></span>
-              <span class="arrow">▾</span>
-            </button>
-            <ul
-              id="dropdown-list"
-              class="dropdown-list"
-              role="listbox"
-              tabindex="-1"
-              hidden
-            ></ul>
-          </div>
-        </div>
+        <!-- Empty for now -->
       </section>
     </main>
   </div>
 
-  <!-- JavaScript -->
-  <script src="chat.js"></script>
-
   <script>
+    function toggleSidebar() {
+      document.querySelector('.sidebar').classList.toggle('collapsed');
+    }
+  </script>
+
+
+<!-- JavaScript -->
+<script src="../js/sidebar.js"></script>
+
+<!-- Token Expiration Check Script -->
+<script>
     // Function to check if the token is expired
     function isTokenExpired(token) {
         if (!token) return true;
@@ -105,13 +88,8 @@
             localStorage.removeItem("jwtToken");  // Remove expired token
             window.location.href = "login.html";  // Redirect to login page
         }
-
-        const el = document.getElementById('model-card-selected-model');
-        if (el) {
-            el.textContent = localStorage.getItem('novaSelectedModel') || 'No model selected';
-        }
     });
-  </script>
+</script>
 
 </body>
 </html>

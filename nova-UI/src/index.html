@@ -28,18 +28,18 @@
         <div class="nav-top">
           <ul>
             <li><a href="index.html"><span class="material-symbols-outlined">home</span><span class="label">Home</span></a></li>
-            <li><a href="chat.html"><span class="material-symbols-outlined">chat</span><span class="label">Chat</span></a></li>
-            <li><a href="media.html"><span class="material-symbols-outlined">video_library</span><span class="label">Media</span></a></li>
-            <li><a href="devices.html"><span class="material-symbols-outlined">devices</span><span class="label">Devices</span></a></li>
-            <li><a href="to-do.html"><span class="material-symbols-outlined">checklist</span><span class="label">To-do</span></a></li>
-            <li><a href="logs.html"><span class="material-symbols-outlined">receipt_long</span><span class="label">Logs</span></a></li>
+            <li><a href="html/chat.html"><span class="material-symbols-outlined">chat</span><span class="label">Chat</span></a></li>
+            <li><a href="html/media.html"><span class="material-symbols-outlined">video_library</span><span class="label">Media</span></a></li>
+            <li><a href="html/devices.html"><span class="material-symbols-outlined">devices</span><span class="label">Devices</span></a></li>
+            <li><a href="html/to-do.html"><span class="material-symbols-outlined">checklist</span><span class="label">To-do</span></a></li>
+            <li><a href="html/logs.html"><span class="material-symbols-outlined">receipt_long</span><span class="label">Logs</span></a></li>
           </ul>
         </div>
         <div class="nav-bottom">
           <ul>
-            <li><a href="settings.html"><span class="material-symbols-outlined">settings</span><span class="label">Settings</span></a></li>
-            <li><a href="notifications.html"><span class="material-symbols-outlined">notifications</span><span class="label">Notifications</span></a></li>
-            <li><a href="profile.html"><span class="material-symbols-outlined">account_circle</span><span class="label">Profile</span></a></li>
+            <li><a href="html/settings.html"><span class="material-symbols-outlined">settings</span><span class="label">Settings</span></a></li>
+            <li><a href="html/notifications.html"><span class="material-symbols-outlined">notifications</span><span class="label">Notifications</span></a></li>
+            <li><a href="html/profile.html"><span class="material-symbols-outlined">account_circle</span><span class="label">Profile</span></a></li>
           </ul>
         </div>
       </nav>
@@ -137,8 +137,9 @@
   </div>
 
 <!-- JavaScript -->
-<script src="index-modal.js"></script>
-<script src="time-greeting.js"></script>
+<script src="js/index-modal.js"></script>
+<script src="js/time-greeting.js"></script>
+
 
 <script>
     // Sidebar toggle function
@@ -166,7 +167,7 @@
 
         if (!token || isTokenExpired(token)) {
             localStorage.removeItem("jwtToken");  // Remove expired token
-            window.location.href = "login.html";  // Redirect to login page
+            window.location.href = "html/login.html";  // Redirect to login page
         }
 
         const el = document.getElementById('model-card-selected-model');
@@ -179,7 +180,7 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     // Fetch the settings.json file to get the username
-    fetch('/mnt/data/nova/config/settings.json')
+    fetch('/mnt/nova/config/settings.json')
         .then(response => response.json())
         .then(data => {
             // Get the username from the settings.json file
