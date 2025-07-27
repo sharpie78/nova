@@ -23,7 +23,7 @@ function openModal(title, content, icon) {
 
   // Special handling for AI Model Management
   if (title === 'AI Model Management') {
-    fetch('html/model-modal.html')
+    fetch('../html/model-modal.html')
       .then(res => res.text())
       .then(html => {
         modalTitle.innerText = icon + ' ' + title;

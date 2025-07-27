@@ -52,7 +52,7 @@
             localStorage.setItem("jwtToken", data.token);
 
             // Redirect to a protected page (e.g., dashboard)
-            window.location.href = "../index.html";
+            window.location.href = "dashboard.html";
         } else {
             messageDiv.innerHTML = `<p class="error">${data.detail}</p>`;
         }
