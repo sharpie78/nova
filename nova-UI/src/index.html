@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nova - Home</title>
+  <link rel="icon" href="novafavicon.png" type="image/png">
+
+  <!-- Link to global modal styles (for all modals) -->
+  <link rel="stylesheet" href="modal-style.css" />
+  <link rel="stylesheet" href="styles-4k.css" />
+  <link rel="stylesheet" href="styles-hd.css" />
+  <link rel="stylesheet" href="styles-small.css" />
+
+
+  <!-- Link to other styles like your main styles -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="dark">
+  <div class="app-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar collapsed">
+      <div class="toggle-btn" onclick="toggleSidebar()">
+        <span class="material-symbols-outlined">menu</span>
+      </div>
+      <nav class="nav-sections">
+        <div class="nav-top">
+          <ul>
+            <li><a href="index.html"><span class="material-symbols-outlined">home</span><span class="label">Home</span></a></li>
+            <li><a href="chat.html"><span class="material-symbols-outlined">chat</span><span class="label">Chat</span></a></li>
+            <li><a href="media.html"><span class="material-symbols-outlined">video_library</span><span class="label">Media</span></a></li>
+            <li><a href="devices.html"><span class="material-symbols-outlined">devices</span><span class="label">Devices</span></a></li>
+            <li><a href="to-do.html"><span class="material-symbols-outlined">checklist</span><span class="label">To-do</span></a></li>
+            <li><a href="logs.html"><span class="material-symbols-outlined">receipt_long</span><span class="label">Logs</span></a></li>
+          </ul>
+        </div>
+        <div class="nav-bottom">
+          <ul>
+            <li><a href="settings.html"><span class="material-symbols-outlined">settings</span><span class="label">Settings</span></a></li>
+            <li><a href="notifications.html"><span class="material-symbols-outlined">notifications</span><span class="label">Notifications</span></a></li>
+            <li><a href="profile.html"><span class="material-symbols-outlined">account_circle</span><span class="label">Profile</span></a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main content area -->
+    <main>
+      <!-- Top bar -->
+      <header class="top-bar">
+        <h1>Home</h1>
+        <div class="top-controls">
+          <span class="material-symbols-outlined">search</span>
+          <span class="material-symbols-outlined">mic</span>
+          <span class="material-symbols-outlined">more_vert</span>
+        </div>
+      </header>
+
+      <!-- Page content -->
+      <section class="content dashboard">
+        <!-- Welcome & Time -->
+        <div class="dashboard-header">
+          <h2 id="greeting"></h2>  <!-- Greeting will go here -->
+          <p class="timestamp" id="time"></p>  <!-- Time will go here -->
+        </div>
+
+        <!-- Unified Dashboard Grid -->
+        <div class="dashboard-grid">
+          <div class="dashboard-card" data-modal-title="Voice Assistant" data-modal-content="Status: Disabled/Idle/Active">
+            <h3>🎤 Voice Assistant</h3>
+            <p><strong>Disabled/Idle/Active</strong></p>
+          </div>
+
+          <div class="dashboard-card" data-modal-title="AI Model Management" data-modal-content="">
+            <h3>🧠 AI Model Management</h3>
+            <p><em style="font-size: 1.1rem; color: #aaa;">Currently selected model:</em></p>
+            <p>
+              <strong id="model-card-selected-model" style="opacity: 1; font-size: 1.2rem; color: #fff; font-weight: bold; background-color: #4caf50; padding: 6px 12px; border-radius: 4px; display: inline-block;">
+              </strong>
+            </p>
+          </div>
+
+
+          <div class="dashboard-card" data-modal-title="System Status" data-modal-content="">
+            <h3>⏱ System Info</h3>
+            <p><strong id="system-info"></strong></p>
+          </div>
+
+
+
+          <div class="dashboard-card" data-modal-title="Now Playing" data-modal-content='"Lo-fi Beats to Focus To"'>
+            <h3>🎶 Now Playing</h3>
+            <p>"Lo-fi Beats to Focus To"</p>
+          </div>
+
+          <div class="dashboard-card" data-modal-title="To-do" data-modal-content='<ul><li>Feed the cat</li><li>Restart PC</li><li>Water plants</li></ul>'>
+            <h3>📋 To-do</h3>
+            <ul>
+              <li><input type="checkbox" /> Feed the cat</li>
+              <li><input type="checkbox" /> Restart PC</li>
+              <li><input type="checkbox" /> Water plants</li>
+            </ul>
+          </div>
+
+          <div class="dashboard-card" data-modal-title="Devices" data-modal-content='3 online · 2 offline<br>Recent: Lamp turned off'>
+            <h3>💡 Devices</h3>
+            <p>3 online · 2 offline</p>
+            <p>Recent: Lamp turned off</p>
+          </div>
+
+          <div class="dashboard-card" data-modal-title="Logs" data-modal-content='No recent errors<br>Last: "Mic activated"'>
+            <h3>🪵 Logs</h3>
+            <p>No recent errors</p>
+            <p>Last: "Mic activated"</p>
+          </div>
+
+          <div class="dashboard-card" data-modal-title="Notifications" data-modal-content='Mic activated<br>Timer set for 20 min<br>Device "Lamp" turned off'>
+            <h3>🔔 Notifications</h3>
+            <ul>
+              <p>You have 3 new alerts</p>
+            <ul>
+
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal structure -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close modal">&times;</button>
+      <h2 id="modal-title"></h2>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+<!-- JavaScript -->
+<script src="index-modal.js"></script>
+<script src="time-greeting.js"></script>
+
+<script>
+    // Sidebar toggle function
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('collapsed'); // Toggle the collapsed class
+    }
+</script>
+
+<script>
+    // Function to check if the token is expired
+    function isTokenExpired(token) {
+        if (!token) return true;
+
+        const decodedToken = JSON.parse(atob(token.split('.')[1]));  // Decode JWT token
+        const expirationTime = decodedToken.exp * 1000;  // Convert to milliseconds
+        const currentTime = Date.now();
+
+        return currentTime >= expirationTime;
+    }
+
+    // Check for token expiration on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem("jwtToken");
+
+        if (!token || isTokenExpired(token)) {
+            localStorage.removeItem("jwtToken");  // Remove expired token
+            window.location.href = "login.html";  // Redirect to login page
+        }
+
+        const el = document.getElementById('model-card-selected-model');
+        if (el) {
+            el.textContent = localStorage.getItem('novaSelectedModel') || 'No model selected';
+        }
+    });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Fetch the settings.json file to get the username
+    fetch('/mnt/data/nova/config/settings.json')
+        .then(response => response.json())
+        .then(data => {
+            // Get the username from the settings.json file
+            const username = data.username;
+
+            // Update the greeting with the username
+            if (username) {
+                const greetingText = `Good Morning, ${username}`; // Customize based on time
+                document.getElementById('greeting').textContent = greetingText;
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching username:", error);
+        });
+});
+</script>
+
+
+
+</body>
+</html>

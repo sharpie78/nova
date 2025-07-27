@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova - Login</title>
+  <link rel="icon" href="novafavicon.png" type="image/png">
+  <link rel="stylesheet" href="styles-4k.css" />
+  <link rel="stylesheet" href="styles-hd.css" />
+  <link rel="stylesheet" href="styles-small.css" />
+  <link rel="stylesheet" href="login.css" />
+  <style>
+
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Login</h1>
+    <form id="loginForm">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+
+      <input type="submit" value="Login">
+    </form>
+    <div id="message"></div>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async function(event) {
+        event.preventDefault();  // Prevent form from reloading the page
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        const response = await fetch("http://localhost:56969/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+
+        const messageDiv = document.getElementById("message");
+
+        if (response.ok) {
+            // Store the JWT token in localStorage
+            localStorage.setItem("jwtToken", data.token);
+
+            // Redirect to a protected page (e.g., dashboard)
+            window.location.href = "index.html";
+        } else {
+            messageDiv.innerHTML = `<p class="error">${data.detail}</p>`;
+        }
+    });
+  </script>
+</body>
+</html>

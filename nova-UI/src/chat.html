@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nova - Chat</title>
+  <link rel="icon" href="novafavicon.png" type="image/png" />
+  <link rel="stylesheet" href="styles-4k.css" />
+  <link rel="stylesheet" href="styles-hd.css" />
+  <link rel="stylesheet" href="styles-small.css" />
+  <link rel="stylesheet" href="chat.css" />
+</head>
+<body class="dark">
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar collapsed">
+      <div class="toggle-btn" onclick="toggleSidebar()">
+        <span class="material-symbols-outlined">menu</span>
+      </div>
+      <nav class="nav-sections">
+        <div class="nav-top">
+          <ul>
+            <li><a href="index.html"><span class="material-symbols-outlined">home</span><span class="label">Home</span></a></li>
+            <li><a href="chat.html"><span class="material-symbols-outlined">chat</span><span class="label">Chat</span></a></li>
+            <li><a href="media.html"><span class="material-symbols-outlined">video_library</span><span class="label">Media</span></a></li>
+            <li><a href="devices.html"><span class="material-symbols-outlined">devices</span><span class="label">Devices</span></a></li>
+            <li><a href="to-do.html"><span class="material-symbols-outlined">checklist</span><span class="label">To-do</span></a></li>
+            <li><a href="logs.html"><span class="material-symbols-outlined">receipt_long</span><span class="label">Logs</span></a></li>
+          </ul>
+        </div>
+        <div class="nav-bottom">
+          <ul>
+            <li><a href="settings.html"><span class="material-symbols-outlined">settings</span><span class="label">Settings</span></a></li>
+            <li><a href="notifications.html"><span class="material-symbols-outlined">notifications</span><span class="label">Notifications</span></a></li>
+            <li><a href="profile.html"><span class="material-symbols-outlined">account_circle</span><span class="label">Profile</span></a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main>
+      <header class="top-bar">
+        <h1>Chat <span id="current-model" style="font-size: 0.6em; opacity: 0.6"></span></h1>
+      </header>
+
+      <section class="content">
+        <div id="chat-window"></div>
+
+        <div id="input-area">
+          <textarea id="user-input" rows="4" placeholder="Type your message here..."></textarea>
+          <button onclick="sendMessage()">Send</button>
+        </div>
+
+        <div id="voice-controls">
+          <button onclick="toggleListen()">🔊 Listen</button>
+          <button onclick="toggleSpeak()">🎙 Speak</button>
+        </div>
+
+        <div id="model-controls">
+          <button id="clear-chat-btn">🗑 Clear</button>
+          <div id="custom-model-dropdown" class="dropdown">
+            <button
+              id="dropdown-button"
+              class="dropdown-button"
+              aria-haspopup="listbox"
+              aria-expanded="false"
+            >
+              <span id="dropdown-selected"></span>
+              <span class="arrow">▾</span>
+            </button>
+            <ul
+              id="dropdown-list"
+              class="dropdown-list"
+              role="listbox"
+              tabindex="-1"
+              hidden
+            ></ul>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="chat.js"></script>
+
+  <script>
+    // Function to check if the token is expired
+    function isTokenExpired(token) {
+        if (!token) return true;
+
+        const decodedToken = JSON.parse(atob(token.split('.')[1]));  // Decode JWT token
+        const expirationTime = decodedToken.exp * 1000;  // Convert to milliseconds
+        const currentTime = Date.now();
+
+        return currentTime >= expirationTime;
+    }
+
+    // Check for token expiration on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem("jwtToken");
+
+        if (!token || isTokenExpired(token)) {
+            localStorage.removeItem("jwtToken");  // Remove expired token
+            window.location.href = "login.html";  // Redirect to login page
+        }
+
+        const el = document.getElementById('model-card-selected-model');
+        if (el) {
+            el.textContent = localStorage.getItem('novaSelectedModel') || 'No model selected';
+        }
+    });
+  </script>
+
+</body>
+</html>

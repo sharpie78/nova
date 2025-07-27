@@ -1,0 +1,20 @@
+<!-- model-modal.html -->
+<div class="modal-section model-management">
+  <div class="model-controls" style="display: flex; gap: 10px; align-items: center; margin-bottom: 12px;">
+    <a href="https://ollama.com/library" target="_blank" style="color: #79aaff; font-size: 0.9em;">Browse Models</a>
+  </div>
+
+  <div class="model-list-section" style="margin-bottom: 12px;">
+    <h3 style="margin-bottom: 6px;">Available Models</h3>
+    <ul id="model-list" style="list-style: none; padding-left: 0; border: 1px solid #444; border-radius: 4px; background: #222; color: #eee;"></ul>
+    <div class="model-buttons" style="margin-top: 8px; display: flex; gap: 10px;">
+      <button onclick="refreshModels()">Refresh</button>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="modal-style.css">
+<link rel="stylesheet" href="styles-4k.css" />
+<link rel="stylesheet" href="styles-hd.css" />
+<link rel="stylesheet" href="styles-small.css" />
+<script src="model-modal.js"></script>

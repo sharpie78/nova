@@ -1,0 +1,45 @@
+sudo apt update
+sudo apt install libwebkit2gtk-4.1-dev \
+  build-essential \
+  curl \
+  wget \
+  file \
+  libxdo-dev \
+  libssl-dev \
+  libayatana-appindicator3-dev \
+  librsvg2-dev
+
+curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+\. "$HOME/.nvm/nvm.sh"
+nvm install 22
+node -v # Should print "v22.17.0".
+nvm current # Should print "v22.17.0".
+npm -v # Should print "10.9.2".
+
+source ~/.cargo/env
+
+source ~/.zshrc
+
+cd /mnt/nova
+sh <(curl https://create.tauri.app/sh)
+
+Project name · nova-UI
+Package name · nova-ui
+Identifier · nova-UI
+Choose which language to use for your frontend · TypeScript / JavaScript - (pnpm, yarn, npm, deno, bun)
+Choose your package manager · npm
+Choose your UI template · Vanilla
+Choose your UI flavor · JavaScript
+
+cd nova-UI
+npm install -D @tauri-apps/cli@latest
+
+rm -rf src
+mkdir src
+copy html etc into src folder
+
+npx tauri dev
+
+...or...
+
+npm run tauri dev

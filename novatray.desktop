@@ -1,0 +1,10 @@
+[Desktop Entry]
+Exec=/mnt/nova/novatray.sh
+Icon=/mnt/nova/backend/assets/icons/novafavicon.png
+Name=Nova
+Path=/mnt/nova/backend
+StartupNotify=true
+Terminal=false
+Type=Application
+X-KDE-RunOnDiscreteGpu=false
+X-KDE-SubstituteUID=false

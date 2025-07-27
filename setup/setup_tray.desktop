@@ -1,0 +1,10 @@
+[Desktop Entry]
+Exec=/mnt/nova/setup/setup_tray.sh
+Icon=/mnt/nova/backend/assets/icons/novafavicon.png
+Name=Nova
+Path=/mnt/nova/setup
+StartupNotify=true
+Terminal=false
+Type=Application
+
+
