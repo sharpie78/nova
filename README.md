@@ -119,3 +119,5 @@ I have no idea if the **system_status** card/modal will work for anyone else. It
 ## Miscellaneous Information
 
 Expect you'll have to install Tauri to run the Nova UI app. The instructions I used are in the **docs** folder.
+
+You should be able to just go to [http](http://127.0.0.1:56969/index.html) and use a browser if you dont want to bother with the App.
