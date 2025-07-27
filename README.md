@@ -118,6 +118,4 @@ I have no idea if the **system_status** card/modal will work for anyone else. It
 
 ## Miscellaneous Information
 
-There is currently some redundant test data in the `nova-webUI` folder as I experiment with Tauri. You can find temporary test builds of the UI in `/src-tauri/target/release`.
-
 Expect you'll have to install Tauri to run the Nova UI app. The instructions I used are in the **docs** folder.
