@@ -4,3 +4,8 @@ __pycache__/
 logs/
 .Trash-1000/
 
+# Ignore everything in nova-UI
+nova-UI/*
+
+# Except the src folder
+!nova-UI/src/
