@@ -28,35 +28,7 @@
     <div id="message"></div>
   </div>
 
-  <script>
-    document.getElementById("loginForm").addEventListener("submit", async function(event) {
-        event.preventDefault();  // Prevent form from reloading the page
-
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-
-        const response = await fetch("http://localhost:56969/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ username, password })
-        });
-
-        const data = await response.json();
-
-        const messageDiv = document.getElementById("message");
-
-        if (response.ok) {
-            // Store the JWT token in localStorage
-            localStorage.setItem("jwtToken", data.token);
-
-            // Redirect to a protected page (e.g., dashboard)
-            window.location.href = "dashboard.html";
-        } else {
-            messageDiv.innerHTML = `<p class="error">${data.detail}</p>`;
-        }
-    });
-  </script>
+  <!-- JavaScript -->
+  <script src="../js/login.js"></script>
 </body>
 </html>

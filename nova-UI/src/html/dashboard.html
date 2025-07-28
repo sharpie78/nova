@@ -51,7 +51,7 @@
         <div class="top-controls">
           <span class="material-symbols-outlined">search</span>
           <span class="material-symbols-outlined">mic</span>
-          <span class="material-symbols-outlined">more_vert</span>
+          <span class="material-symbols-outlined options-toggle">more_vert</span>
         </div>
       </header>
 
@@ -139,9 +139,7 @@
 <script src="../js/model-modal.js"></script>
 <script src="../js/system-modal.js"></script>
 <script src="../js/time-greeting.js"></script>
-
-
-
+<script src="../js/options-menu.js"></script>
 
 <script>
     // Sidebar toggle function
@@ -177,29 +175,6 @@
         }
     });
 </script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Fetch the settings.json file to get the username
-    fetch('/mnt/nova/config/settings.json')
-        .then(response => response.json())
-        .then(data => {
-            // Get the username from the settings.json file
-            const username = data.username;
-
-            // Update the greeting with the username
-            if (username) {
-                const greetingText = `Good Morning, ${username}`; // Customize based on time
-                document.getElementById('greeting').textContent = greetingText;
-            }
-        })
-        .catch(error => {
-            console.error("Error fetching username:", error);
-        });
-});
-</script>
-
-
 
 </body>
 </html>

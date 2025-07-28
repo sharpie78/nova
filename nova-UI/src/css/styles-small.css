@@ -257,3 +257,30 @@ main {
   .dashboard-card .dot.yellow { background-color: #ffeb3b; }
   .dashboard-card .dot.red { background-color: #f44336; }
 }
+
+.options-menu {
+  position: absolute;
+  top: 56px;
+  right: 16px;
+  background-color: #2e2e2e;
+  border: 1px solid #444;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.4rem;
+  min-width: 140px;
+  padding: 4px 0;
+  z-index: 1000;
+}
+
+.options-menu li {
+  list-style: none;
+  padding: 10px 16px;
+  color: #f0f0f0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.options-menu li:hover {
+  background-color: #3a3a3a;
+}

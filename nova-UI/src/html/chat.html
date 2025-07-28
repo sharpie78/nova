@@ -41,7 +41,19 @@
     <!-- Main -->
     <main>
       <header class="top-bar">
-        <h1>Chat <span id="current-model" style="font-size: 0.6em; opacity: 0.6"></span></h1>
+        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%">
+          <!-- Left: Title + Model -->
+          <h1 style="margin: 0">
+            Chat <span id="current-model" style="font-size: 0.6em; opacity: 0.6"></span>
+          </h1>
+
+          <!-- Right: Icons -->
+          <div class="top-controls">
+            <span class="material-symbols-outlined">search</span>
+            <span class="material-symbols-outlined">mic</span>
+            <span class="material-symbols-outlined options-toggle">more_vert</span>
+          </div>
+        </div>
       </header>
 
       <section class="content">
@@ -85,6 +97,7 @@
   <!-- JavaScript -->
   <script src="../js/sidebar.js"></script>
   <script src="../js/chat.js"></script>
+  <script src="../js/options-menu.js"></script>
 
   <script>
     // Function to check if the token is expired

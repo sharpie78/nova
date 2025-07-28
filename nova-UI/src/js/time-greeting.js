@@ -40,8 +40,9 @@ function updateGreeting(username) {
 }
 
 function fetchUsernameAndUpdateGreeting() {
-  // Fetch the username from settings.json
-  fetch('http://127.0.0.1:56969/settings')  // Directly fetch the settings route
+  // Fetch the username from user-settings.json
+  const username = localStorage.getItem("username");
+  fetch(`http://localhost:56969/settings/${username}`)
     .then(response => response.json())     // Parse it as JSON
     .then(data => {
         const username = data.username;      // Extract the username

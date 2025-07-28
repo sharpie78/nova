@@ -3,6 +3,18 @@
 # Get the directory of the current script (where this shell script is located)
 SCRIPT_DIR=$(dirname "$0")
 
+# Step 0: Generate secret key if not present
+CONFIG_DIR="$SCRIPT_DIR/../config"
+SECRET_KEY_FILE="$HOME/.local/share/nova-UI/nova.key"
+
+mkdir -p "$CONFIG_DIR"
+
+if [ ! -f "$SECRET_KEY_FILE" ]; then
+    echo "Generating new secret key..."
+    head -c 32 /dev/urandom | base64 > "$SECRET_KEY_FILE"
+    echo "Secret key saved to $SECRET_KEY_FILE"
+fi
+
 # Define the service file path dynamically
 SERVICE_DIR="$HOME/.config/systemd/user"
 SERVICE_FILE="$SERVICE_DIR/novatray.service"
@@ -41,8 +53,3 @@ else
     sleep 5
     systemctl --user start novatray.service
 fi
-
-
-
-
-

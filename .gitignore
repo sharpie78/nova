@@ -1,11 +1,24 @@
+# Ignore Python virtual environment
 backend/venv/
+
+# Ignore Python cache
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+
+# Ignore logs
 logs/
+
+# Ignore system trash
 .Trash-1000/
 
-# Ignore everything in nova-UI
+# Ignore everything in nova-UI, except src
 nova-UI/*
-
-# Except the src folder
 !nova-UI/src/
+!nova-UI/src/**
+
+# Ignore sensitive user config
+config/*.settings.json
+config/users.json
+config/users.json-*
+

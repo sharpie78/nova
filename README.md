@@ -91,11 +91,11 @@ sudo apt install python3-pyqt6 neofetch
 
 To enable **Nova** to start on every boot, follow one of these methods:
 
-### Method 1: Systemd Integration
+### Method 1: Systemd Integration - preferred
 - Run `setup_tray.sh` from the `setup` folder or double-click the `setup_tray.desktop` file.
-- This will install the `novatray.service` to `~/.config/systemd/user` and should open an instance of the tray app.
+- This will create a "secret.key" file in  config folder which is used throughout app for authentication. It will then install the `novatray.service` to `~/.config/systemd/user` and should open an instance of the tray app.
 
-### Method 2: Manual Startup and Integration
+### Method 2: Manual Startup and Integration - dunno if this works anymore----test
 - Run `novatray.sh` or double-click on `novatray.desktop` to open the tray app.
 - Once opened, click on "Integrate Nova" to perform the same action. It will close the current tray instance and leave a new one running via the systemd service. Be patient—it will take about 20 seconds.
 
