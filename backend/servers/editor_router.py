@@ -193,7 +193,7 @@ def launch_editor():
     try:
         process = subprocess.Popen(
             ["npx", "tauri", "dev"],
-            cwd="/mnt/nova/nova-ui/editor",
+            cwd="/home/jack/nova/frontend/nova-editor",
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )

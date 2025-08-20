@@ -96,7 +96,7 @@ def open_webUI(api_server_action, launch_ui_action, icons):
         else:
             logger.debug("API server is already running.")
 
-        process = subprocess.Popen(["npx", "tauri", "dev"], cwd="/mnt/nova")
+        process = subprocess.Popen(["npx", "tauri", "dev"], cwd="/home/jack/nova/frontend/nova-ui")
         webUI_pid = process.pid
 
         with open("/tmp/webUI_pid.txt", "w") as file:
