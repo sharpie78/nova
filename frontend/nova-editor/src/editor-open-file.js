@@ -51,7 +51,7 @@ async function openFromVault() {
     }
   }
 
-  await renderFolder("/mnt/nova/vault", container);
+  await renderFolder("/home/jack/nova/vault", container);
   modal.classList.remove("hidden");
 
   document.addEventListener("click", function closeModal(e) {
