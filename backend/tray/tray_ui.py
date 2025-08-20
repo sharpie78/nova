@@ -54,57 +54,58 @@ def _monitor_webUI_process(api_server_action, icons, launch_ui_action):
             logger.error("Failed to fetch window list.")
         time.sleep(1)  # Adjust sleep time if necessary
 
-def open_webUI(api_server_action, launch_ui_action, icons):
-    """Open the Web UI via its AppImage."""
-    global webUI_pid
-    try:
-        logger.debug("Opening UI...")
-        if not is_api_server_up():
-            logger.debug("API server is not running. Starting the server.")
-            start_api_server(api_server_action, icons)
-
-        app_dir = Path(os.path.expanduser('~/nova/frontend'))
-        appimage = app_dir / "nova-ui.AppImage"
-
-        if not appimage.is_file():
-            raise FileNotFoundError(f"No AppImage found in {app_dir}")
-
-        process = subprocess.Popen(
-            [str(appimage)],
-            cwd=str(app_dir),
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            start_new_session=True,
-        )
-        webUI_pid = process.pid
-        Path("/tmp/webUI_pid.txt").write_text(str(webUI_pid))
-        logger.info(f"UI opened ✅ (pid={webUI_pid}, path={appimage})")
-
-    except Exception as e:
-        logger.critical(f"Failed to launch Nova-WebUI: {e}")
-
-# Use this version when developing app
+# Use this version when deploying app
 #def open_webUI(api_server_action, launch_ui_action, icons):
-#    """Open the Web UI using Tauri."""
+#    """Open the Web UI via its AppImage."""
 #    global webUI_pid
 #    try:
 #        logger.debug("Opening UI...")
 #        if not is_api_server_up():
 #            logger.debug("API server is not running. Starting the server.")
 #            start_api_server(api_server_action, icons)
-#        else:
-#            logger.debug("API server is already running.")
 #
-#        process = subprocess.Popen(["npx", "tauri", "dev"], cwd="/mnt/nova")
+#        app_dir = Path(os.path.expanduser('~/nova/frontend'))
+#        appimage = app_dir / "nova-ui.AppImage"
+#
+#        if not appimage.is_file():
+#            raise FileNotFoundError(f"No AppImage found in {app_dir}")
+#
+#        process = subprocess.Popen(
+#            [str(appimage)],
+#            cwd=str(app_dir),
+#            stdout=subprocess.DEVNULL,
+#            stderr=subprocess.DEVNULL,
+#            start_new_session=True,
+#        )
 #        webUI_pid = process.pid
-#
-#        with open("/tmp/webUI_pid.txt", "w") as file:
-#            file.write(str(webUI_pid))
-#
-#        logger.info(f"UI opened ✅ ")
+#        Path("/tmp/webUI_pid.txt").write_text(str(webUI_pid))
+#        logger.info(f"UI opened ✅ (pid={webUI_pid}, path={appimage})")
 #
 #    except Exception as e:
 #        logger.critical(f"Failed to launch Nova-WebUI: {e}")
+
+# Use this version when developing app
+def open_webUI(api_server_action, launch_ui_action, icons):
+    """Open the Web UI using Tauri."""
+    global webUI_pid
+    try:
+        logger.debug("Opening UI...")
+        if not is_api_server_up():
+            logger.debug("API server is not running. Starting the server.")
+            start_api_server(api_server_action, icons)
+        else:
+            logger.debug("API server is already running.")
+
+        process = subprocess.Popen(["npx", "tauri", "dev"], cwd="/mnt/nova")
+        webUI_pid = process.pid
+
+        with open("/tmp/webUI_pid.txt", "w") as file:
+            file.write(str(webUI_pid))
+
+        logger.info(f"UI opened ✅ ")
+
+    except Exception as e:
+        logger.critical(f"Failed to launch Nova-WebUI: {e}")
 
 
 def close_webUI(launch_ui_action, api_server_action, icons):

@@ -163,43 +163,44 @@ def inject_text(request: InjectTextRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@EditorRouter.post("/launch_editor")
-def launch_editor():
-    global editor_pid
-    appimage = Path.home() / "nova" / "frontend" / "nova-editor.AppImage"
-    try:
-        if not appimage.is_file():
-            raise HTTPException(status_code=404, detail=f"AppImage not found: {appimage}")
-
-        process = subprocess.Popen(
-            [str(appimage)],
-            cwd=str(appimage.parent),
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            start_new_session=True,
-        )
-        editor_pid = process.pid
-        return JSONResponse(content={"status": "launched", "pid": editor_pid, "path": str(appimage)})
-    except HTTPException:
-        raise
-    except Exception as e:
-        return JSONResponse(content={"error": str(e)}, status_code=500)
-
-# Use this version when developing app
+# Use this version for deploying app
 #@EditorRouter.post("/launch_editor")
 #def launch_editor():
 #    global editor_pid
+#    appimage = Path.home() / "nova" / "frontend" / "nova-editor.AppImage"
 #    try:
+#        if not appimage.is_file():
+#            raise HTTPException(status_code=404, detail=f"AppImage not found: {appimage}")
+#
 #        process = subprocess.Popen(
-#            ["npx", "tauri", "dev"],
-#            cwd="/mnt/nova/nova-ui/editor",
+#            [str(appimage)],
+#            cwd=str(appimage.parent),
 #            stdout=subprocess.DEVNULL,
 #            stderr=subprocess.DEVNULL,
+#            start_new_session=True,
 #        )
 #        editor_pid = process.pid
-#        return JSONResponse(content={"status": "launched", "pid": editor_pid})
+#        return JSONResponse(content={"status": "launched", "pid": editor_pid, "path": str(appimage)})
+#    except HTTPException:
+#        raise
 #    except Exception as e:
 #        return JSONResponse(content={"error": str(e)}, status_code=500)
+
+# Use this version when developing app
+@EditorRouter.post("/launch_editor")
+def launch_editor():
+    global editor_pid
+    try:
+        process = subprocess.Popen(
+            ["npx", "tauri", "dev"],
+            cwd="/mnt/nova/nova-ui/editor",
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        editor_pid = process.pid
+        return JSONResponse(content={"status": "launched", "pid": editor_pid})
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)
 
 @EditorRouter.post("/close_editor")
 def close_editor():
