@@ -5,7 +5,7 @@ SCRIPT_DIR=$(dirname "$0")
 
 # Step 0: Generate secret key if not present
 CONFIG_DIR="$SCRIPT_DIR/../config"
-SECRET_KEY_FILE="$HOME/.local/share/nova-UI/nova.key"
+SECRET_KEY_FILE="$HOME/.local/share/nova-ui/nova.key"
 
 # ensure parent directory exists
 mkdir -p "$(dirname "$SECRET_KEY_FILE")"
