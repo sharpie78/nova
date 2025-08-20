@@ -33,7 +33,7 @@
                 "5": "qwen3:8b",
                 "6": "gemma3:4b"
             },
-            "preferred_model": "benevolentjoker/nsfwmonika:latest"
+            "preferred_model": "gemma3:4b"
         }
     },
     "voice": {
