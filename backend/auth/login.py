@@ -18,7 +18,7 @@ logger = logger.bind(name="UI")
 
 # Secret key for JWT encoding and decoding
 # Load the secret key from file
-SECRET_KEY_PATH = os.path.expanduser("~/.local/share/nova-UI/nova.key")
+SECRET_KEY_PATH = os.path.expanduser("~/.local/share/nova-ui/nova.key")
 try:
     with open(SECRET_KEY_PATH, "r") as f:
         SECRET_KEY = f.read().strip()
