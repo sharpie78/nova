@@ -47,7 +47,4 @@ frontend/nova-ui/README.md
 frontend/nova-ui/package.json
 frontend/nova-ui/package-lock.json
 
-# Large voice models (excluded)
-backend/audio/voices/alba/
-backend/audio/voices/male/
-backend/audio/voices/vctk/
+
