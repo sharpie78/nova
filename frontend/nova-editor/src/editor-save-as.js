@@ -79,7 +79,7 @@ async function saveAs() {
   let inputField = null;
   let confirmText = null;
   let previouslySelected = null;
-  let currentPath = "/mnt/nova/vault";
+  let currentPath = "/home/jack/nova/vault";
 
   let existingFiles = [];
 
@@ -89,7 +89,7 @@ async function saveAs() {
 
     existingFiles = folders.items.filter(f => !f.is_dir).map(f => f.name);
 
-    if (folderPath !== "/mnt/nova/vault") {
+    if (folderPath !== "/home/jack/nova/vault") {
       const back = document.createElement("div");
       back.textContent = "⬅️ ..";
       back.className = "file-item";

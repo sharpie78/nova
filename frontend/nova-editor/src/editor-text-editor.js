@@ -1,5 +1,3 @@
-
-
 let cm = CodeMirror.fromTextArea(document.getElementById("editor"), {
   lineNumbers: true,
   mode: "plaintext",
@@ -9,37 +7,81 @@ let cm = CodeMirror.fromTextArea(document.getElementById("editor"), {
 });
 cm.setSize('100%', '100%');
 
-// ✅ expose the instance so the toolbar handlers can find it
+// expose the instance
 window.Nova = window.Nova || {};
 window.Nova.cm = cm;
 
-cm.getWrapperElement().addEventListener('dragover', function (e) {
-  e.preventDefault();
-});
-cm.getWrapperElement().addEventListener('drop', function (e) {
-  e.preventDefault();
-});
+// -------- continuous, lightweight mode auto-detect --------
+function guessModeFromContent(text) {
+  if (!text || !text.trim()) return "plaintext";
+  const head = text.slice(0, 400);
 
+  // HTML?
+  if (/^\s*<(!doctype|html|head|body|script|style)\b/i.test(head) || /<\/[a-zA-Z]/.test(head)) {
+    return "htmlmixed";
+  }
 
-function stopAll() {
-  document.getElementById('speak-button')?.classList.remove('active');
-  document.getElementById('listen-button')?.classList.remove('active');
-  updateStopButtonVisibility();
+  // JSON?
+  try {
+    const t = text.trim();
+    if (t.startsWith("{") || t.startsWith("[")) {
+      JSON.parse(text);
+      return { name: "javascript", json: true };
+    }
+  } catch {}
+
+  // Python?
+  if (/^#!.*\bpython\b/.test(head) ||
+      /\b(def|class|import|from|self|async\s+def|if\s+__name__\s*==\s*['"]__main__['"])\b/.test(text)) {
+    return "python";
+  }
+
+  // CSS?
+  if (/{[^}]+}/.test(text) && /\b[a-z-]+\s*:\s*[^;{}]+;/.test(head)) {
+    return "css";
+  }
+
+  // default to JS
+  return "javascript";
 }
 
-function readText(el) {
-  el.classList.toggle('active');
-  updateStopButtonVisibility();
+// debounce helper
+function debounce(fn, ms) {
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn.apply(null, args), ms); };
 }
 
-function startDictation(el) {
-  el.classList.toggle('active');
-  updateStopButtonVisibility();
-}
+// set once at startup
+(function applyInitialMode() {
+  const mode = guessModeFromContent(cm.getValue());
+  cm.setOption("mode", mode);
+  // if lint is enabled already, make sure it's wired for this mode
+  if (window.Nova && Nova.relintForMode) Nova.relintForMode();
+})();
 
-function toggleLinting(el) {
-  // placeholder for linting toggle
-}
+// re-detect on EVERY edit (short debounce) so colours + linter stay correct
+const reDetect = debounce(() => {
+  const newMode = guessModeFromContent(cm.getValue());
+  const current = cm.getOption("mode");
+  const currName = (typeof current === 'string') ? current : (current && (current.name || current.mime));
+  const newName  = (typeof newMode  === 'string') ? newMode  : (newMode  && (newMode.name  || newMode.mime));
+  if (currName !== newName) {
+    cm.setOption("mode", newMode);
+    // tell linting to re-wire for the new mode
+    if (window.Nova && Nova.relintForMode) Nova.relintForMode();
+  } else {
+    // same mode, but if linting is on, re-run so fixed errors clear quickly
+    if (window.Nova && Nova.lintEnabled && cm.performLint) cm.performLint();
+  }
+}, 200);
+
+cm.on("change", () => reDetect());
+
+// -------- misc UI you already had --------
+
+// drag & drop guards
+cm.getWrapperElement().addEventListener('dragover', function (e) { e.preventDefault(); });
+cm.getWrapperElement().addEventListener('drop', function (e) { e.preventDefault(); });
 
 // Clipboard + edit ops
 (function(){
@@ -61,23 +103,17 @@ function toggleLinting(el) {
     }
   };
 
-  // Paste that prefers Tauri clipboard, falls back to backend route
   window.paste = async () => {
     const e = (window.Nova && Nova.cm) || window.cm;
     if (!e) return;
     e.focus();
-
-    // 1) Tauri clipboard (native system clipboard in the app)
     try {
       if (window.__TAURI__?.clipboard?.readText) {
         const t = await window.__TAURI__.clipboard.readText();
         if (t) e.replaceSelection(t);
         return;
       }
-      // If using v2 and globals aren't injected, this will be undefined.
     } catch {}
-
-    // 2) Backend fallback (see Option B route below)
     try {
       const r = await fetch("http://127.0.0.1:56969/clipboard/read");
       if (r.ok) {
@@ -87,18 +123,14 @@ function toggleLinting(el) {
         return;
       }
     } catch {}
-
     alert("Paste via button is blocked here. Use Ctrl/Cmd+V.");
   };
 
-
-
-  // Select All: focus first, then select so it's visible
   window.selectAll = () => {
     const e = (window.Nova && Nova.cm) || window.cm;
     if (!e) return;
     e.focus();
-    e.execCommand('selectAll'); // or: e.setSelection({line:0,ch:0}, e.posFromIndex(e.getValue().length));
+    e.execCommand('selectAll');
   };
 
   window.cut = async () => {

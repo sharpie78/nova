@@ -5,17 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nova - Editor</title>
   <link rel="icon" href="novafavicon.png" type="image/png" />
+
+  <!-- Styles -->
   <link rel="stylesheet" href="editor-style.css">
   <link rel="stylesheet" href="editor-modal-style.css">
   <link rel="stylesheet" href="editor-code-editor-modal.css">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+  <!-- CodeMirror core & theme -->
   <link rel="stylesheet" href="https://unpkg.com/codemirror@5/lib/codemirror.css">
   <link rel="stylesheet" href="https://unpkg.com/codemirror@5/theme/material.css">
   <script src="https://unpkg.com/codemirror@5/lib/codemirror.js"></script>
   <script src="https://unpkg.com/codemirror@5/mode/meta.js"></script>
   <script src="https://unpkg.com/codemirror@5/addon/mode/loadmode.js"></script>
   <script src="https://unpkg.com/codemirror@5/addon/display/placeholder.js"></script>
+
+  <!-- Common modes -->
+  <script src="https://unpkg.com/codemirror@5/mode/javascript/javascript.js"></script>
+  <script src="https://unpkg.com/codemirror@5/mode/python/python.js"></script>
+  <script src="https://unpkg.com/codemirror@5/mode/css/css.js"></script>
+  <script src="https://unpkg.com/codemirror@5/mode/htmlmixed/htmlmixed.js"></script>
+  <script src="https://unpkg.com/codemirror@5/mode/xml/xml.js"></script>
+
+  <!-- Lint UI -->
+  <link rel="stylesheet" href="https://unpkg.com/codemirror@5/addon/lint/lint.css">
+  <script src="https://unpkg.com/codemirror@5/addon/lint/lint.js"></script>
+
+  <!-- Third-party linters -->
+  <script src="https://cdn.jsdelivr.net/npm/jshint@2.13.6/dist/jshint.js"></script>          <!-- JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsonlint/1.6.0/jsonlint.min.js"></script> <!-- JSON -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/csslint/1.0.5/csslint.min.js"></script>   <!-- CSS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/htmlhint/1.1.5/htmlhint.min.js"></script> <!-- HTML -->
+
+  <!-- CodeMirror adapters for those linters -->
+  <script src="https://unpkg.com/codemirror@5/addon/lint/javascript-lint.js"></script>
+  <script src="https://unpkg.com/codemirror@5/addon/lint/json-lint.js"></script>
+  <script src="https://unpkg.com/codemirror@5/addon/lint/css-lint.js"></script>
+  <script src="https://unpkg.com/codemirror@5/addon/lint/html-lint.js"></script>
 </head>
+
 <body class="dark">
   <div class="editor">
 
@@ -32,8 +60,6 @@
       </div>
     </div>
 
-
-
     <!-- DROPDOWN MENU -->
     <div id="main-menu" class="dropdown-menu hidden">
       <div onclick="openFromVault()">Open</div>
@@ -44,7 +70,6 @@
     <div id="open-modal" class="dropdown-menu hidden" style="max-height: 400px; overflow-y: auto;">
       <div id="file-tree-root"></div>
     </div>
-
 
     <!-- TOOLBAR -->
     <div class="editor-toolbar">
@@ -79,10 +104,7 @@
           <span style="font-size: 1.5rem;">A</span>
           <div class="button-label">Font Size</div>
         </div>
-
       </div>
-
-
     </div>
 
     <!-- MAIN EDITOR AREA -->
@@ -104,15 +126,15 @@
 
   </div>
 
-  <!-- SCRIPT -->
+  <!-- Your app scripts -->
   <script src="editor-ui.js"></script>
   <script src="editor-text-editor.js"></script>
   <script src="editor-bridge.js"></script>
-
   <script src="editor-open-file.js"></script>
   <script src="editor-save-as.js"></script>
   <script src="editor-fontsize.js"></script>
 
-
+  <!-- Linting logic -->
+  <script src="editor-linting.js"></script>
 </body>
 </html>
