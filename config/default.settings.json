@@ -1,0 +1,192 @@
+{
+    "general": {
+        "username": {
+            "label": "User name",
+            "type": "text",
+            "default": "jack"
+        },
+        "role": {
+            "label": "Role",
+            "type": "dropdown",
+            "options": [
+                "Admin",
+                "User",
+                "Guest"
+            ],
+            "default": "Admin"
+        },
+        "delete_user": {
+            "label": "Delete User",
+            "type": "delete_user",
+            "default": ""
+        }
+    },
+    "ai_model": {
+        "select_preferred_model_index": {
+            "label": "Select Preferred Model",
+            "type": "dropdown",
+            "options": {
+                "1": "benevolentjoker/nsfwmonika:latest",
+                "2": "llama3.2:3b",
+                "3": "wizard-vicuna-uncensored:latest",
+                "4": "deepseek-r1:8b",
+                "5": "qwen3:8b",
+                "6": "gemma3:4b"
+            },
+            "preferred_model": "llama3.2:3b"
+        }
+    },
+    "voice": {
+        "wake_word_enabled": {
+            "label": "Wake Word Enabled",
+            "type": "toggle",
+            "default": false
+        },
+        "wake_word_sensitivity": {
+            "label": "Wake Word Sensitivity",
+            "type": "range",
+            "min": 1,
+            "max": 10,
+            "default": 5
+        },
+        "voice_commands": {
+            "label": "Voice Commands",
+            "type": "toggle",
+            "default": false
+        },
+        "voice_activated_search": {
+            "label": "Voice Activated Search",
+            "type": "toggle",
+            "default": false
+        },
+        "Whisper model": {
+            "label": "Whisper Model",
+            "type": "dropdown",
+            "options": [
+                "Small",
+                "Large",
+                "Turbo"
+            ],
+            "default": "Turbo"
+        },
+        "Voice Selectionl": {
+            "label": "Voice Selection",
+            "type": "dropdown",
+            "options": [
+                "Alba",
+                "Frank",
+                "Nova"
+            ],
+            "default": "Nova"
+        }
+    },
+    "audio": {
+        "microphone_input": {
+            "label": "Microphone Input",
+            "type": "dropdown",
+            "options": [
+                "Mic 1",
+                "Mic 2",
+                "Mic 3"
+            ],
+            "default": "Mic 1"
+        },
+        "volume_control": {
+            "label": "Volume Control",
+            "type": "range",
+            "min": 0,
+            "max": 100,
+            "default": 50
+        }
+    },
+    "chat": {
+        "chat_history": {
+            "label": "Chat History",
+            "type": "toggle",
+            "default": true
+        },
+        "manage_memory": {
+            "label": "Manage Memory",
+            "type": "button"
+        },
+        "context_window": {
+            "label": "Memory size",
+            "type": "range",
+            "min": 0,
+            "max": 100,
+            "default": 33
+        }
+    },
+    "interface": {
+        "theme": {
+            "label": "Theme",
+            "type": "dropdown",
+            "options": [
+                "Light",
+                "Dark"
+            ],
+            "default": "Dark"
+        },
+        "Activity timeout": {
+            "label": "Activity Timeout",
+            "type": "dropdown",
+            "options": [
+                "1 minute",
+                "2 minutes",
+                "5 minutes",
+                "10 minutes",
+                "15 minutes",
+                "30 minutes",
+                "60 minutes",
+                "90 minutes",
+                "120 minutes",
+                "never"
+            ],
+            "default": "10 minutes"
+        },
+        "Session timeout": {
+            "label": "Session Timeout",
+            "type": "dropdown",
+            "options": [
+                "1 minute",
+                "2 minutes",
+                "5 minutes",
+                "10 minutes",
+                "15 minutes",
+                "30 minutes",
+                "60 minutes",
+                "90 minutes",
+                "120 minutes",
+                "never"
+            ],
+            "default": "120 minutes"
+        }
+    },
+    "notifications": {
+        "email_notifications": {
+            "label": "Email Notifications",
+            "type": "toggle",
+            "default": false
+        },
+        "push_notifications": {
+            "label": "Push Notifications",
+            "type": "toggle",
+            "default": false
+        }
+    },
+    "logs": {
+        "default log level": {
+            "label": "default log level",
+            "type": "dropdown",
+            "options": [
+                "INFO",
+                "DEBUG",
+                "TRACE"
+            ],
+            "default": "DEBUG"
+        }
+    },
+    "hidden": {
+        "last_settings_page": "logs"
+    }
+}

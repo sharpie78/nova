@@ -1,0 +1,85 @@
+/* editor-modal-style.css - overwrite confirm + file tree */
+
+#overwrite-confirm {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #2e2e2e;
+  border: 1px solid #555;
+  border-radius: 8px;
+  padding: 20px;
+  color: #f0f0f0;
+  font-size: 1.3rem;
+  z-index: 10001;
+  text-align: center;
+  min-width: 300px;
+}
+
+#overwrite-confirm .btn-row {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+#overwrite-confirm .editor-button {
+  min-width: 70px;
+  padding: 8px 16px;
+  font-size: 1.3rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+}
+
+#overwrite-confirm button {
+  font-size: 1.3rem;
+  padding: 6px 16px;
+  border: 1px solid #666;
+  border-radius: 6px;
+  background-color: #1f1f1f;
+  color: #f0f0f0;
+  cursor: pointer;
+}
+
+#overwrite-confirm button:hover {
+  background-color: #333;
+  border-color: #888;
+}
+
+/* File Tree */
+#file-list {
+  padding-left: 16px;
+  font-size: 1.4rem;
+  color: #f0f0f0;
+}
+
+.file-item,
+.tree-file,
+.tree-folder {
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.file-item:hover,
+.tree-file:hover {
+  background-color: #333;
+}
+
+.tree-folder {
+  font-weight: bold;
+}
+
+/* Icons for file/folder */
+.folder-item::before,
+.tree-folder::before {
+  content: "📁 ";
+  margin-right: 6px;
+}
+
+.file-entry::before,
+.tree-file::before {
+  content: "📄 ";
+  margin-right: 6px;
+}

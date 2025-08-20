@@ -1,0 +1,228 @@
+/* ============================================
+   Media Queries for Responsiveness
+   ============================================ */
+
+/* === Small Screens (Up to 1024px) === */
+@media (max-width: 1024px) {
+  .modal-content {
+    width: 90%;
+    padding: 24px;
+    font-size: 1.2rem;
+  }
+
+  .modal .modal-content h2 {
+    font-size: 1.8rem;
+  }
+
+  .modal .modal-content p {
+    font-size: 1.4rem;
+  }
+
+  .dot {
+    font-size: 0.8rem;
+  }
+
+  button {
+    font-size: 1.2rem;
+  }
+
+  #chat-window {
+    font-size: 1.2rem;
+    padding: 12px;
+  }
+
+  .bubble {
+    font-size: 1.2rem;
+    padding: 8px 12px;
+  }
+
+  textarea {
+    font-size: 1.2rem;
+    padding: 8px;
+  }
+
+  select, button {
+    font-size: 1.2rem;
+  }
+
+  #input-area {
+    gap: 4px;
+  }
+
+  .dropdown {
+    width: 200px;
+  }
+
+  .dropdown-button {
+    font-size: 0.9rem;
+  }
+}
+
+/* === HD Screens (1024px to 1920px) === */
+@media (min-width: 1024px) and (max-width: 1920px) {
+  .dashboard-header {
+    margin-bottom: 24px;
+  }
+
+  .dashboard-header h2 {
+    font-size: 3rem;
+    margin-bottom: 8px;
+  }
+
+  .dashboard-header .timestamp {
+    font-size: 1.8rem;
+    color: #aaa;
+  }
+
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(4, auto);
+    gap: 32px 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  .dashboard-card {
+    font-size: 1.6rem;
+    padding: 24px;
+  }
+
+  .dashboard-card h3 {
+    font-size: 1.8rem;
+  }
+
+  .dashboard-card .system-info-heading {
+    font-size: 16px;
+  }
+
+  .modal-content {
+    width: 80%;
+    padding: 28px;
+    font-size: 1.4rem;
+  }
+
+  .modal .modal-content h2 {
+    font-size: 2rem;
+  }
+
+  .modal .modal-content p {
+    font-size: 1.6rem;
+  }
+
+  .dot {
+    font-size: 1rem;
+  }
+
+  button {
+    font-size: 1.4rem;
+  }
+
+  #chat-window {
+    font-size: 1.4rem;
+    padding: 14px;
+  }
+
+  .bubble {
+    font-size: 1.4rem;
+    padding: 10px 14px;
+  }
+
+  textarea {
+    font-size: 1.4rem;
+    padding: 10px;
+  }
+
+  .dropdown {
+    width: 230px;
+  }
+
+  .dropdown-button {
+    font-size: 1rem;
+  }
+}
+
+/* === 4K Screens (1921px to 3840px) === */
+@media (min-width: 1921px) and (max-width: 3840px) {
+  .dashboard-header {
+    margin-bottom: 24px;
+  }
+
+  .dashboard-header h2 {
+    font-size: 4rem;
+    margin-bottom: 8px;
+  }
+
+  .dashboard-header .timestamp {
+    font-size: 2rem;
+    color: #aaa;
+  }
+
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 48px 48px;
+    max-width: 3400px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  .dashboard-card {
+    font-size: 2rem;
+    padding: 40px;
+  }
+
+  .dashboard-card h3 {
+    font-size: 2.5rem;
+  }
+
+  .dashboard-card .system-info-heading {
+    font-size: 18px;
+  }
+
+  .modal-content {
+    width: 70%;
+    padding: 32px;
+    font-size: 1.6rem;
+  }
+
+  .modal .modal-content h2 {
+    font-size: 2.5rem;
+  }
+
+  .modal .modal-content p {
+    font-size: 1.8rem;
+  }
+
+  .dot {
+    font-size: 1.2rem;
+  }
+
+  button {
+    font-size: 1.6rem;
+  }
+
+  #chat-window {
+    font-size: 1.5rem;
+    padding: 16px;
+  }
+
+  .bubble {
+    font-size: 1.5rem;
+    padding: 12px 16px;
+  }
+
+  textarea {
+    font-size: 1.5rem;
+    padding: 12px;
+  }
+
+  .dropdown {
+    width: 250px;
+  }
+
+  .dropdown-button {
+    font-size: 1.1rem;
+  }
+}

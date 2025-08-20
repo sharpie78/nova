@@ -1,0 +1,36 @@
+# ===============================
+# docker-compose.yml
+# ===============================
+version: "3.8"
+services:
+  searxng:
+    image: searxng/searxng:latest
+    restart: unless-stopped
+    ports:
+      - "8888:8080"        # SearXNG HTTP API on localhost:8888
+    environment:
+      - BASE_URL=http://127.0.0.1:8888/
+      - SEARXNG_SECRET=changeme-secret
+      - MORTY_ENABLED=false
+    # No settings mount needed; we pick engines per-request using the 'engines=' query param.
+    volumes:
+      - ./searxng/settings.yml:/etc/searxng/settings.yml:ro
+
+  webfox:
+    build: ./webfox
+    restart: unless-stopped
+    ports:
+      - "8070:8070"        # Headless Firefox microservice
+    environment:
+      - SHOTS_DIR=/shots
+      - PAGE_TIMEOUT=12     # seconds per page
+      - MAX_PAGES=1
+      - HEADLESS=1
+    volumes:
+      - ${HOME}/nova/tmp/webshots:/shots
+    # Security hardening (works on most Docker versions):
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    read_only: false         # container FS writable; screenshots go to /shots (bind mount)

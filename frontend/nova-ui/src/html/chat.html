@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nova - Chat</title>
+  <link rel="icon" href="../assets/icons/novafavicon.png" type="image/png" />
+  <link rel="stylesheet" href="../css/styles-layout.css" />
+  <link rel="stylesheet" href="../css/styles-layout-media.css" />
+  <link rel="stylesheet" href="../css/styles-dark.css" />
+  <link rel="stylesheet" href="../css/pages/chat.css" />
+  <style>
+  </style>
+</head>
+<body class="dark">
+  <div class="app-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar collapsed">
+      <nav class="nav-sections">
+        <div class="nav-top">
+          <ul>
+            <li><a href="dashboard.html"><span class="material-symbols-outlined">home</span><span class="label">Home</span></a></li>
+            <li><a href="chat.html"><span class="material-symbols-outlined">chat</span><span class="label">Chat</span></a></li>
+            <li><a href="voice.html"><span class="material-symbols-outlined">mic</span><span class="label">Voice Control</span></a></li>
+            <li><a href="media.html"><span class="material-symbols-outlined">video_library</span><span class="label">Media</span></a></li>
+            <li><a href="devices.html"><span class="material-symbols-outlined">devices</span><span class="label">Devices</span></a></li>
+            <li><a href="to-do.html"><span class="material-symbols-outlined">checklist</span><span class="label">To-do</span></a></li>
+            <li><a href="search.html"><span class="material-symbols-outlined">search</span><span class="label">Search</span></a></li>
+            <li><a href="logs.html"><span class="material-symbols-outlined">receipt_long</span><span class="label">Logs</span></a></li>
+          </ul>
+        </div>
+        <div class="nav-bottom">
+          <ul>
+            <li><a href="settings.html"><span class="material-symbols-outlined">settings</span><span class="label">Settings</span></a></li>
+            <li><a href="notifications.html"><span class="material-symbols-outlined">notifications</span><span class="label">Notifications</span></a></li>
+            <li><a href="profile.html"><span class="material-symbols-outlined">account_circle</span><span class="label">Profile</span></a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main content area -->
+    <main>
+      <!-- Top bar -->
+      <header class="top-bar" data-tauri-drag-region>
+        <div class="top-left">
+          <h1>Chat</h1>
+        </div>
+        <div class="window-controls">
+          <button id="titlebar-minimize" title="Minimize">−</button>
+          <button id="titlebar-maximize" title="Maximize">□</button>
+          <button id="titlebar-close" title="Close">×</button>
+        </div>
+      </header>
+
+      <!-- Combined dropdown and checkboxes -->
+      <div class="top-controls-container">
+        <div id="custom-model-dropdown" class="dropdown">
+          <button
+            id="dropdown-button"
+            class="dropdown-button"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+          >
+            <span id="dropdown-selected"></span>
+            <span class="arrow">▾</span>
+          </button>
+          <ul
+            id="dropdown-list"
+            class="dropdown-list"
+            role="listbox"
+            tabindex="-1"
+            hidden
+          ></ul>
+        </div>
+
+        <div id="chat-options">
+          <label><input type="checkbox" id="disable-chat-history" /> temp chat</label>
+        </div>
+      </div>
+
+      <section class="content">
+        <div id="chat-window"></div>
+
+        <div id="input-area">
+          <textarea id="user-input" rows="4" placeholder="Type your message here..."></textarea>
+          <button id="send-btn">Send</button>
+        </div>
+
+        <!-- Controls Row -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+          <!-- Left: Voice Buttons -->
+          <div style="display: flex; gap: 0.5rem;">
+            <button onclick="toggleListen()">🔊 Listen</button>
+            <button onclick="toggleSpeak()">🎧 Speak</button>
+          </div>
+        </div>
+
+        <!-- Load/Save/Clear/Delete -->
+        <div style="display: flex; gap: 0.5rem; margin-top: 8px;">
+          <button id="new-chat-btn">🆕 New</button>
+          <button id="load-chat-btn">📂 Load</button>
+          <button id="save-chat-btn">📥 Save</button>
+          <button id="clear-chat-btn">🗑 Clear</button>
+          <button id="delete-chat-btn">💥 Delete</button>
+        </div>
+
+        <button id="open-editor-btn" class="open-editor-button">📝 Editor</button>
+      </section>
+    </main>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="../js/sidebar.js"></script>
+  <script type="module" src="../js/chat/agent-ui.js?v=3"></script>
+  <script type="module" src="../js/chat/chat.js"></script>
+  <script type="module" src="../js/chat/chat-load.js"></script>
+  <script src="../js/titlebar.js"></script>
+
+  <script>
+    function isTokenExpired(token) {
+      if (!token) return true;
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      const expirationTime = decodedToken.exp * 1000;
+      const currentTime = Date.now();
+      return currentTime >= expirationTime;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const token = localStorage.getItem("jwtToken");
+      if (!token || isTokenExpired(token)) {
+        localStorage.removeItem("jwtToken");
+        window.location.href = "login.html";
+      }
+      const el = document.getElementById('model-card-selected-model');
+      if (el) {
+        el.textContent = localStorage.getItem('novaSelectedModel') || 'No model selected';
+      }
+    });
+
+    window.onload = () => {
+      document.getElementById("user-input").focus();
+    };
+  </script>
+
+  <div id="modal-container"></div>
+</body>
+</html>

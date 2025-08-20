@@ -1,0 +1,53 @@
+venv/
+vault/
+*.pyc
+logs/
+tmp/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.env
+
+# Node
+node_modules/
+npm-debug.log*
+yarn.lock
+pnpm-lock.yaml
+
+# VSCode
+.vscode/
+
+# Logs
+logs/
+*.log
+
+# System
+.DS_Store
+.Trash-1000/
+
+# Ignore all src-tauri folders
+src-tauri/
+**/src-tauri/
+
+# Ignore editor + UI metadata and lock files
+frontend/nova-editor/.gitignore
+frontend/nova-editor/README.md
+frontend/nova-editor/package.json
+frontend/nova-editor/package-lock.json
+
+frontend/nova-ui/.gitignore
+frontend/nova-ui/README.md
+frontend/nova-ui/package.json
+frontend/nova-ui/package-lock.json
+
+# Large voice models (excluded)
+backend/audio/voices/alba/
+backend/audio/voices/male/
+backend/audio/voices/vctk/

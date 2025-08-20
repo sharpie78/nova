@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nova - Notifications</title>
+  <link rel="icon" href="../assets/icons/novafavicon.png" type="image/png">
+  <link rel="stylesheet" href="../css/styles-layout.css" />
+  <link rel="stylesheet" href="../css/styles-layout-media.css" />
+  <link rel="stylesheet" href="../css/styles-dark.css" />
+</head>
+<body class="dark">
+  <div class="app-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar collapsed">
+      <nav class="nav-sections">
+        <div class="nav-top">
+          <ul>
+            <li><a href="dashboard.html"><span class="material-symbols-outlined">home</span><span class="label">Home</span></a></li>
+            <li><a href="chat.html"><span class="material-symbols-outlined">chat</span><span class="label">Chat</span></a></li>
+            <li><a href="voice.html"><span class="material-symbols-outlined">mic</span><span class="label">Voice Control</span></a></li>
+            <li><a href="media.html"><span class="material-symbols-outlined">video_library</span><span class="label">Media</span></a></li>
+            <li><a href="devices.html"><span class="material-symbols-outlined">devices</span><span class="label">Devices</span></a></li>
+            <li><a href="to-do.html"><span class="material-symbols-outlined">checklist</span><span class="label">To-do</span></a></li>
+            <li><a href="search.html"><span class="material-symbols-outlined">search</span><span class="label">Search</span></a></li>
+            <li><a href="logs.html"><span class="material-symbols-outlined">receipt_long</span><span class="label">Logs</span></a></li>
+          </ul>
+        </div>
+        <div class="nav-bottom">
+          <ul>
+            <li><a href="settings.html"><span class="material-symbols-outlined">settings</span><span class="label">Settings</span></a></li>
+            <li><a href="notifications.html"><span class="material-symbols-outlined">notifications</span><span class="label">Notifications</span></a></li>
+            <li><a href="profile.html"><span class="material-symbols-outlined">account_circle</span><span class="label">Profile</span></a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main content area -->
+    <main>
+      <!-- Top bar -->
+      <header class="top-bar" data-tauri-drag-region>
+        <div class="top-left">
+          <h1>Notifications</h1>
+        </div>
+        <div class="window-controls">
+          <button id="titlebar-minimize" title="Minimize">−</button>
+          <button id="titlebar-maximize" title="Maximize">□</button>
+          <button id="titlebar-close" title="Close">×</button>
+        </div>
+      </header>
+
+
+      <!-- Page content -->
+      <section class="content">
+        <!-- Empty for now -->
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      document.querySelector('.sidebar').classList.toggle('collapsed');
+    }
+  </script>
+
+
+<!-- JavaScript -->
+<script src="../js/titlebar.js"></script>
+<script src="../js/sidebar.js"></script>
+<script type="module" src="../js/settings/settings-timeout.js"></script>
+
+<!-- Token Expiration Check Script -->
+<script>
+    // Function to check if the token is expired
+    function isTokenExpired(token) {
+        if (!token) return true;
+
+        const decodedToken = JSON.parse(atob(token.split('.')[1]));  // Decode JWT token
+        const expirationTime = decodedToken.exp * 1000;  // Convert to milliseconds
+        const currentTime = Date.now();
+
+        return currentTime >= expirationTime;
+    }
+
+    // Check for token expiration on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem("jwtToken");
+
+        if (!token || isTokenExpired(token)) {
+            localStorage.removeItem("jwtToken");  // Remove expired token
+            window.location.href = "login.html";  // Redirect to login page
+        }
+    });
+</script>
+
+</body>
+</html>

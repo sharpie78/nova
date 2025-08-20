@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova - Login</title>
+  <link rel="icon" href="../assets/icons/novafavicon.png" type="image/png">
+  <link rel="stylesheet" href="../css/styles-layout.css" />
+  <link rel="stylesheet" href="../css/styles-layout-media.css" />
+  <link rel="stylesheet" href="../css/styles-dark.css" />
+  <link rel="stylesheet" href="../css/pages/login.css" />
+</head>
+<body class="dark">
+
+  <div class="app-container">
+    <main>
+      <!-- Top bar -->
+      <header class="top-bar" data-tauri-drag-region>
+        <div class="title">
+          <h1>Nova UI Login</h1>
+        </div>
+        <div class="window-controls">
+          <button id="titlebar-minimize" title="Minimize">−</button>
+          <button id="titlebar-maximize" title="Maximize">□</button>
+          <button id="titlebar-close" title="Close">×</button>
+        </div>
+      </header>
+    </main>
+  </div>
+
+  <div class="login-container">
+    <h1>Login</h1>
+    <form id="loginForm">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+
+      <input type="submit" value="Login">
+    </form>
+    <div id="message"></div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="../js/login.js"></script>
+
+  <script>
+    window.onload = () => {
+      document.getElementById("username").focus();
+    };
+  </script>
+</body>
+</html>

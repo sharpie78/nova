@@ -1,0 +1,140 @@
+/* Basic styling for the login page */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #121212;  /* Dark background */
+  color: #f1f1f1;  /* Light text */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-image: url('../../assets/images/login-background.jpg');  /* Background image */
+  background-size: cover;  /* Cover the entire screen */
+  background-position: center;  /* Center the image */
+  background-attachment: fixed;  /* Keep the background fixed while scrolling */
+}
+
+.login-container {
+  background-color: rgba(44, 47, 53, 0.7);  /* Slightly transparent overlay */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  text-align: center;
+}
+
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #f1f1f1;
+}
+
+label {
+  display: block;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0 15px 0;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: #444;
+  color: #f1f1f1;
+}
+
+input[type="submit"] {
+  background-color: #4CAF50;  /* Green button */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.error {
+  color: red;
+  margin-top: 15px;
+}
+
+.success {
+  color: green;
+  margin-top: 15px;
+}
+
+.top-bar h1 {
+  font-size: 2rem;
+  margin-top: 20px;
+}
+
+.top-bar {
+  flex-wrap: nowrap;
+}
+
+/* ============================================
+   Media Queries for Responsiveness
+   ============================================ */
+
+/* For HD Screens (1024px to 1920px) */
+@media (min-width: 1024px) and (max-width: 1920px) {
+  .login-container {
+    width: 400px;  /* Standard width for HD screens */
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 24px;  /* Heading font size for HD screens */
+  }
+
+  label {
+    font-size: 14px;  /* Standard label font size */
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    padding: 10px;
+    font-size: 1.4rem;  /* Standard input font size */
+  }
+
+  input[type="submit"] {
+    font-size: 16px;  /* Standard button text */
+    padding: 10px 20px;
+  }
+}
+
+/* For 4K Screens (1921px to 3840px) */
+@media (min-width: 1921px) and (max-width: 3840px) {
+  .login-container {
+    width: 600px;  /* Keep login container width the same */
+    height: 500px;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 34px;  /* Larger heading for 4K screens */
+  }
+
+  label {
+    font-size: 22px;  /* Larger label font size */
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    padding: 12px;  /* Larger input padding */
+    font-size: 2rem;  /* Larger font size for inputs */
+  }
+
+  input[type="submit"] {
+    font-size: 22px;  /* Larger button text */
+    padding: 12px 24px;
+  }
+}

@@ -1,0 +1,30 @@
+use_default_settings: true
+server:
+  base_url: http://127.0.0.1:8888/
+  secret_key: changeme-secret
+
+search:
+  formats: [html, json]
+
+engines:
+  - name: google
+    disabled: true
+  - name: bing
+    disabled: true
+  - name: duckduckgo
+    disabled: true
+  - name: startpage
+    disabled: false
+  - name: brave
+    disabled: true
+  - name: qwant
+    disabled: true
+  # keep these on:
+  - name: wikipedia
+    disabled: false
+  - name: wikidata
+    disabled: false
+  - name: wikinews
+    disabled: false
+  - name: mojeek
+    disabled: false

@@ -1,0 +1,15 @@
+[Unit]
+Description=Nova Tray Manager
+After=graphical.target
+
+[Service]
+ExecStartPre=/bin/sleep 5
+Environment=DISPLAY=:0
+ExecStart=%h/nova/venv/bin/python %h/nova/backend/novatray.py
+WorkingDirectory=%h/nova/backend
+Restart=always
+RestartSec=2
+User=%u
+
+[Install]
+WantedBy=default.target
