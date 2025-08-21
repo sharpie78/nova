@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -o errexit
+set -o errtrace
 set -o pipefail
 set -o nounset
 
@@ -131,7 +132,7 @@ else
 fi
 
 # Upgrade pip (as target user)
-runuser -l "$TARGET_USER" -c "source '$TARGET_HOME/nova/venv/bin/activate' && pip install --upgrade pip && echo 'pip upgraded successfully.'" || warn "pip upgrade failed."
+runuser -l "$TARGET_USER" -c "source '$TARGET_HOME/nova/venv/bin/activate' && python -m pip install --upgrade pip" || warn "pip upgrade failed."
 
 # Install requirements (as target user)
 if runuser -l "$TARGET_USER" -c "cd '$TARGET_HOME/nova' && source venv/bin/activate && pip install -r '$TARGET_HOME/nova/docs/requirements.txt'"; then
@@ -140,6 +141,7 @@ else
   err "Failed to install requirements. Check requirements.txt."
   exit 1
 fi
+
 
 # =========================
 # 4) Docker setup
@@ -293,8 +295,60 @@ echo -e "  ${YELLOW}multi-voice:${NC} $(model_name "$VOICE_BASE/vctk")"
 
 ok "Piper TTS models step complete."
 
+
 # =========================
-# 7) novatray user service
+# 7) Download AppImages
+# =========================
+info "Downloading AppImages to frontend…"
+
+FRONTEND_DIR="$TARGET_HOME/nova/frontend"
+mkdir -p "$FRONTEND_DIR"
+chown "$TARGET_USER":"$TARGET_USER" "$FRONTEND_DIR" || true
+
+download_appimage() {
+  # usage: download_appimage <outfile> <url1> [url2 url3 ...]
+  local out="$1"; shift
+  local name; name=$(basename "$out")
+
+  if [ -s "$out" ]; then
+    info "Already have $name"
+    return 0
+  fi
+
+  # try each URL until one works
+  local url tmp_rc=1
+  for url in "$@"; do
+    info "Downloading $name… ($url)"
+    if curl -fL --retry 3 --retry-all-errors -o "$out.part" "$url"; then
+      chmod +x "$out.part"
+      mv -f "$out.part" "$out"
+      chown "$TARGET_USER":"$TARGET_USER" "$out" || true
+      ok "$name downloaded"
+      tmp_rc=0
+      break
+    else
+      warn "Failed from: $url"
+      rm -f "$out.part" 2>/dev/null || true
+    fi
+  done
+
+  if [ $tmp_rc -ne 0 ]; then
+    warn "Could not download $name from any source (skipping)."
+  fi
+  return $tmp_rc
+}
+
+# Candidate URLs: pinned tag, and 'latest' redirect
+download_appimage "$FRONTEND_DIR/nova-editor.AppImage" \
+  "https://github.com/sharpie78/nova/releases/latest/download/nova-editor.AppImage"
+
+download_appimage "$FRONTEND_DIR/nova-ui.AppImage" \
+  "https://github.com/sharpie78/nova/releases/latest/download/nova-ui.AppImage"
+
+
+
+# =========================
+# 8) novatray user service
 # =========================
 SERVICE_DIR="$TARGET_HOME/.config/systemd/user"
 SERVICE_FILE="$SERVICE_DIR/novatray.service"
