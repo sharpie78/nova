@@ -23,7 +23,7 @@ Clone the repo into your home folder and run the setup script:
 
 ```bash
 git clone https://github.com/sharpie78/nova.git
-cd nova
+cd nova/setup
 chmod +x setup.sh
 sudo ./setup.sh
 ```  
