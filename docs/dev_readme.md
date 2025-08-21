@@ -38,7 +38,7 @@ setup.sh                 # Main install script
 1. Clone the repo and checkout `nova-dev`:
 
 ```bash
-git clone https://github.com/your-org/nova.git
+git clone https://github.com/sharpie78/nova.git
 cd nova
 git checkout nova-dev
 ```
