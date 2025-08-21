@@ -1,6 +1,6 @@
 # NOVA  
 
-NOVA is a local AI assistant for people who don’t want to drown in jargon. It’s simple, intuitive, and functional — no deep coding or AI knowledge needed.  
+NOVA is a local AI assistant for people who don’t want to drown in jargon. I've tried to make it simple, intuitive, and functional — no deep coding or AI knowledge needed.  
 
 ## Status  
 Usable, basic, and under active development. Expect things to change.  
