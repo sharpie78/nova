@@ -19,7 +19,7 @@ LOG_FILE="$LOG_DIR/setup.log"
 
 # Redirect: keep colors in terminal, strip ANSI for the logfile
 exec > >(tee >(sed -r 's/\x1B\[[0-9;]*[A-Za-z]//g' >> "$LOG_FILE")) 2>&1
-info "Logging to: $LOG_FILE"
+
 
 # ===== Colors & Symbols =====
 RED='\033[0;31m'
@@ -40,6 +40,8 @@ warn(){ echo -e "${WARN} ${*:-}"; }
 err(){  echo -e "${CROSS} ${*:-}"; }
 
 trap 'err "Error on line $LINENO. Exiting."' ERR
+
+info "Logging to: $LOG_FILE"
 
 # Require root (sudo) to avoid docker permission issues
 if [ "$EUID" -ne 0 ]; then
