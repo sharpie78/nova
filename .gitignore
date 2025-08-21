@@ -1,7 +1,5 @@
 venv/
 vault/
-*.pyc
-logs/
 tmp/
 
 # Python
@@ -49,3 +47,9 @@ frontend/nova-ui/package-lock.json
 
 
 bfg.jar
+
+config/admin.settings.json
+config/users.json
+
+# AppImage builds
+*.AppImage
