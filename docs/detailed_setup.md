@@ -1,7 +1,6 @@
 # Nova Detailed Setup Guide
 
-This guide covers manual setup steps for Nova. Most users should just run `setup.sh`.  
-Use this only if you need finer control or troubleshooting.
+Most users should run `setup.sh`. Use this guide for manual steps or troubleshooting.
 
 ## Install Python 3.10
 
@@ -77,37 +76,5 @@ curl 'http://127.0.0.1:8888/search?q=test&format=json' | head
 curl -fsSL https://ollama.com/install.sh | sh
 ```
 
-Follow Ollama’s instructions to download and run a model:  
-👉 https://github.com/ollama/ollama
-
----
-
-## Setup Tauri
-
-```bash
-sudo apt update
-sudo apt install libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev
-```
-
-Install Rust:
-
-```bash
-curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
-. "$HOME/.cargo/env"
-```
-
-Install Node.js (via NVM):
-
-```bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-source ~/.zshrc
-nvm install 22
-nvm use 22
-```
-
-Verify:
-
-```bash
-node -v   # should show v22.x
-npm -v    # should show ~10.x
-```
+Follow Ollama’s instructions to download and run a model:
+https://github.com/ollama/ollama

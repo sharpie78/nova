@@ -41,7 +41,7 @@ After install, you’ll have a tray icon to start interacting with Nova.
   [http://127.0.0.1:56969/index.html](http://127.0.0.1:56969/index.html) *(planned, not yet working)*  
 
 ## Documentation  
-- **Detailed setup instructions:** [`docs/detailed setup.md`](docs/detailed%20setup.md)  
+- **Detailed setup instructions:** [`docs/detailed_setup.md`](docs/detailed_setup.md)  
 - **Developer guide:** [`docs/dev_readme.md`](docs/dev_readme.md)  
 
 ## Contributing  
