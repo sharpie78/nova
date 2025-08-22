@@ -1,0 +1,2 @@
+backend/servers/editor_router.py merge=keep_ours
+backend/tray/tray_ui.py       merge=keep_ours
