@@ -10,7 +10,7 @@
 - **nova-dev**: Developer branch  
   - Full development branch  
   - Used for building/changing AppImages with Tauri and backend work  
-  - Please always create sub-branches from `nova-dev` for new features/fixes  
+  - Please always create sub-branches from `nova-dev` for new features/fixes
 
 ---
 
@@ -39,23 +39,46 @@ If improvements or new features are added to the UI in your branch, please **bui
 
 ---
 
+- I'd prefer to be in charge of what gets updated for end users but...
+
+If you want to merge `nova-dev` into `main`, add this alias to your shell config so the Editor/UI functions don’t get overwritten:
+
+⚠️ **Important:** Never merge `nova-dev` into `main` without this alias — otherwise the Editor/UI launch functions will get overwritten and break.
+
+```bash
+if ! grep -q "merge-dev-to-main" ~/.zshrc; then
+  echo "alias merge-dev-to-main='git checkout main && git pull origin main && git merge --no-commit --no-ff nova-dev && git checkout --ours -- backend/servers/editor_router.py backend/tray/tray_ui.py && git add backend/servers/editor_router.py backend/tray/tray_ui.py && git commit -m \"Merge nova-dev into main (keep main editor/tray)\" && git push origin main'" >> ~/.zshrc
+fi
+
+source ~/.zshrc
+```
+- ### 🛑 Undo last merge (if something went wrong)
+
+If the alias was run and you need to roll back the last merge, run:
+
+```bash
+git reset --hard HEAD~1
+git push origin main --force
+```
+
 ## ⚙️ Developer Setup  
 
-1. Clone the repo into your home folder and checkout `nova-dev`:  
+1. Clone the repo into your home folder and checkout `nova-dev`:
 
 ```bash
 git clone https://github.com/sharpie78/nova.git
 cd nova
 git checkout nova-dev
 ```  
+2. you'll still need to run setup.sh
 
-2. Set up Tauri manually see below or run the tauri_setup.sh file in setup folder.  
+3. Set up Tauri manually see below or run the tauri_setup.sh file in setup folder.
    - Install Rust via rustup  
    - Install NVM and Node.js v22  
    - Ensure npm and npx are available  
    - Install required system libs (`libwebkit2gtk`, etc.)  
 
-3. Install frontend deps and run with Tauri:  
+4. Install frontend deps and run with Tauri:
 
 For **nova-editor**:  
 ```bash
@@ -108,10 +131,9 @@ npx tauri dev
 
 ---
 
-## 📎 Tips  
+## 📎 Tips
 
-- Stash/backup Tauri-related files before switching branches  
-- Treat `nova-dev` as the main development workspace, and create new features/fixes in sub-branches  
-- Keep `main` clean for end users  
-- Document any ignored files here or in the main README  
-
+- backup Tauri-related files before switching branches.
+- Treat `nova-dev` as the main development workspace, and create new features/fixes in sub-branches.
+- Keep `main` clean for end users.
+- Document any ignored files here or in the main README.
