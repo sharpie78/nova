@@ -48,9 +48,14 @@ frontend/nova-ui/package-lock.json
 
 bfg.jar
 
+config/test.settings.json
 config/jack.settings.json
 config/admin.settings.json
 config/users.json
 
 # AppImage builds
 *.AppImage
+
+# Voice/ML models (downloaded by setup, not tracked)
+backend/audio/tts/models/
+backend/audio/tts/voices/
