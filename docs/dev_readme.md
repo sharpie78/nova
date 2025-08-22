@@ -1,104 +1,117 @@
-# 🛠️ Nova Dev Guide
+# 🛠️ Nova Developer Guide  
 
-## 🔀 Branch Structure
+## 🔀 Branch Structure  
 
-- `main`: Production setup
-  - Clean repo for users
-  - No raw frontend source
-  - No Tauri files or AppImages in Git
-  - Setup script downloads AppImages
+- **main**: Production setup  
+  - Clean repo for end users  
+  - "Heavy" frontend files and AppImages are excluded from Git  
+  - `setup.sh` downloads AppImages and models  
 
-- `nova-dev`: Developer branch
-  - Includes raw frontend source in `src/`
-  - Excludes `.AppImage` binaries
-  - Ignores `src-tauri/`
-  - Used for ongoing dev work
+- **nova-dev**: Developer branch  
+  - Full development branch  
+  - Used for building/changing AppImages with Tauri and backend work  
+  - Please always create sub-branches from `nova-dev` for new features/fixes  
 
 ---
 
-## 📁 Folder Structure
+## 📁 UI Folder Structure  
 
 ```
 frontend/
 ├── nova-editor/
-│   └── src/           # HTML/CSS/JS source (included)
-│   └── [src-tauri/]   # Ignored, local only
+│   ├── node_modules/       # Installed by npm (ignored by git)
+│   ├── package.json        # Tauri project config (ignored by git)
+│   ├── package-lock.json   # Dependency lock (ignored by git)
+│   ├── README.md           # Local project readme (ignored by git)
+│   ├── src/                # HTML/CSS/JS source (tracked)
+│   └── src-tauri/          # Tauri project files (ignored by git)
 ├── nova-ui/
-│   └── src/           # HTML/CSS/JS source (included)
-│   └── [src-tauri/]   # Ignored, local only
-config/
-├── default.settings.json
-├── admin.settings.json  # Ignored
-├── users.json           # Ignored
-setup.sh                 # Main install script
-```
+│   ├── node_modules/       # Installed by npm (ignored by git)
+│   ├── package.json        # Tauri project config (ignored by git)
+│   ├── package-lock.json   # Dependency lock (ignored by git)
+│   ├── README.md           # Local project readme (ignored by git)
+│   ├── src/                # HTML/CSS/JS source (tracked)
+│   └── src-tauri/          # Tauri project files (ignored by git)
+```  
+
+On **main**, only the code in `/src` and built AppImages should be published — `node_modules/` and `src-tauri/` etc are stripped out.  
+If improvements or new features are added to the UI in your branch, please **build a new AppImage** as part of your development.  
 
 ---
 
-## ⚙️ Developer Setup
+## ⚙️ Developer Setup  
 
-1. Clone the repo and checkout `nova-dev`:
+1. Clone the repo into your home folder and checkout `nova-dev`:  
 
 ```bash
-git clone https://github.com/your-org/nova.git
+git clone https://github.com/sharpie78/nova.git
 cd nova
 git checkout nova-dev
-```
+```  
 
-2. Create user config:
+2. Set up Tauri manually see below or run the tauri_setup.sh file in setup folder.  
+   - Install Rust via rustup  
+   - Install NVM and Node.js v22  
+   - Ensure npm and npx are available  
+   - Install required system libs (`libwebkit2gtk`, etc.)  
 
-```bash
-cp config/default.settings.json config/admin.settings.json
-```
+3. Install frontend deps and run with Tauri:  
 
-3. Restore `src-tauri/` folders (optional for native app dev):
-- Download from GitHub Releases (or backup)
-- Extract to `frontend/nova-editor/src-tauri/` and `frontend/nova-ui/src-tauri/`
-
-4. Install frontend deps:
+For **nova-editor**:  
 ```bash
 cd frontend/nova-editor
 npm install
-npm run tauri dev
-```
+npx tauri dev
+```  
 
-Repeat for `nova-ui` if needed.
-
----
-
-## 🚫 Git Ignore Strategy
-
-| File/Folder                        | Tracked? | Notes                        |
-|----------------------------------|----------|------------------------------|
-| `frontend/nova-*/src/`           | ✅ Yes   | Your actual source code     |
-| `frontend/nova-*/src-tauri/`     | ❌ No    | Too large, ignored          |
-| `*.AppImage`                     | ❌ No    | Downloaded by setup         |
-| `config/admin.settings.json`     | ❌ No    | User-specific config        |
-| `config/users.json`              | ❌ No    | User-specific config        |
-| `package.json`, `README.md` etc. | ❌ No    | Not required in `main`      |
+For **nova-ui**:  
+```bash
+cd frontend/nova-ui
+npm install
+npx tauri dev
+```  
 
 ---
 
-## 🔄 Merging nova-dev → main
+## 🚫 Git Ignore Strategy  
 
-When merging:
-- Only `src/` folders are merged into `main`
-- You must manually restore or exclude `src-tauri/` and AppImages before commit
-- `setup.sh` takes care of downloading AppImages for users
+| File/Folder                    | Tracked? | Notes                       |
+|--------------------------------|----------|-----------------------------|
+| `frontend/nova-*/src/`          | ✅ Yes   | Always tracked              |
+| `frontend/nova-*/src-tauri/`    | ❌ No    | Local only, dev branch      |
+| `frontend/nova-*/node_modules/` | ❌ No    | Generated by npm            |
+| `*.AppImage`                    | ❌ No    | Downloaded by setup         |
+| `config/admin.settings.json`    | ❌ No    | User-specific config        |
+| `config/users.json`             | ❌ No    | User-specific config        |  
 
----
-
-## 🧪 Tools & Scripts
-
-- `setup.sh`: Installs backend, downloads AppImages
-- `dev-tauri-setup.sh` (optional): Restores `src-tauri/` for dev
-- `scripts/backup-frontend.sh`: (optional) Save `src/` for merge protection
+👉 Also add your `<username>.settings.json` to `.gitignore`  
 
 ---
 
-## 📎 Tips
+## 🔄 Merging `nova-dev` → `main`  
 
-- Always stash or backup `src-tauri/` before switching branches
-- Keep `nova-dev` as your source of truth for UI/HTML/CSS/JS
-- Document all non-Git-tracked files in this guide or README
+⚠️ **Please do not merge directly.**  
+- All merges to `main` require approval — create a sub-branch of `nova-dev` and wait for review.  
+- Approved merges should bring **src/** updates and new AppImages into `main` and the Releases section.  
+- `node_modules/` and `src-tauri/` etc must not be merged.  
+- Built AppImages should be uploaded to GitHub Releases. You are welcome to version them with any version suffix you wish.  
+
+---
+
+## 🧪 Tools & Scripts  
+
+- `nova/setup/setup.sh` → Installs backend + downloads AppImages (available to all users)  
+- `nova/setup/dev-tauri-setup.sh` → Prepares Tauri for dev (dev branch only)  
+- `nova/setup/backup-frontend.sh` → Backup helper for frontend files (available to all users)  
+- `nova/backend/utils/cuda_test.py` → Test CUDA/GPU availability (available to all users)  
+- `nova/backend/utils/test_routes.py` → Quick check of backend API routes (available to all users)  
+
+---
+
+## 📎 Tips  
+
+- Stash/backup Tauri-related files before switching branches  
+- Treat `nova-dev` as the main development workspace, and create new features/fixes in sub-branches  
+- Keep `main` clean for end users  
+- Document any ignored files here or in the main README  
 
