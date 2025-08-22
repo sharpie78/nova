@@ -52,8 +52,9 @@ sudo ./setup.sh
   [http://127.0.0.1:56969/index.html](http://127.0.0.1:56969/index.html) *(planned, not yet working)*  
 
 ## Documentation  
-- **Detailed setup instructions:** [detailed_setup.md](detailed_setup.md)  
+- **Detailed User setup instructions:** [detailed_setup.md](detailed_setup.md)
 - **Developer guide:** [dev_readme.md](dev_readme.md)  
+- **Developer Tauri setup process:** [dev_tauri_setup.md](dev_tauri_setup.md)
 
 
 ## Contributing  

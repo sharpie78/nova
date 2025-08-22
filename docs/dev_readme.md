@@ -34,20 +34,21 @@ frontend/
 │   └── src-tauri/          # Tauri project files (ignored by git)
 ```  
 
-On **main**, only the code in `/src` and built AppImages should be published — `node_modules/` and `src-tauri/` etc are stripped out.  
+On **main**, only the code in `/src` and built AppImages should be published — `node_modules/` and `src-tauri/` etc are stripped out.
+There are some files needed for Tauri to work properly. They have been included in the repo for nova-dev branch.
 If improvements or new features are added to the UI in your branch, please **build a new AppImage** as part of your development.  
 
 ---
 
 - I'd prefer to be in charge of what gets updated for end users but...
 
-If you want to merge `nova-dev` into `main`, add this alias to your shell config so the Editor/UI functions don’t get overwritten:
+If you want to merge `nova-dev` into `main` locally on your pc, add this alias to your shell config so the Editor/UI functions don’t get overwritten:
 
-⚠️ **Important:** Never merge `nova-dev` into `main` without this alias — otherwise the Editor/UI launch functions will get overwritten and break.
+⚠️ **Important:** Never merge `nova-dev` into `main` without this alias — otherwise the Editor/UI launch functions will get overwritten, files not needed in main will get added and the ui's will break.
 
 ```bash
 if ! grep -q "merge-dev-to-main" ~/.zshrc; then
-  echo "alias merge-dev-to-main='git checkout main && git pull origin main && git merge --no-commit --no-ff nova-dev && git checkout --ours -- backend/servers/editor_router.py backend/tray/tray_ui.py && git add backend/servers/editor_router.py backend/tray/tray_ui.py && git commit -m \"Merge nova-dev into main (keep main editor/tray)\" && git push origin main'" >> ~/.zshrc
+  echo "alias merge-dev-to-main='git checkout main && git pull origin main && git merge --no-commit --no-ff nova-dev && git checkout --ours -- backend/servers/editor_router.py backend/tray/tray_ui.py frontend/nova-editor/src-tauri/capabilities/default.json frontend/nova-editor/src-tauri/tauri.conf.json frontend/nova-ui/src-tauri/capabilities/default.json frontend/nova-ui/src-tauri/tauri.conf.json && git add backend/servers/editor_router.py backend/tray/tray_ui.py frontend/nova-editor/src-tauri/capabilities/default.json frontend/nova-editor/src-tauri/tauri.conf.json frontend/nova-ui/src-tauri/capabilities/default.json frontend/nova-ui/src-tauri/tauri.conf.json && git commit -m \"Merge nova-dev into main (keep main editor/tray + tauri configs)\" && git push origin main'" >> ~/.zshrc
 fi
 
 source ~/.zshrc
@@ -92,7 +93,7 @@ sudo ./setup.sh
 
 ...or...
 
-run the tauri_setup.sh file in setup folder.
+run the tauri_setup.sh file in the setup folder.
 
 ```bash
 cd $HOME/nova/setup
