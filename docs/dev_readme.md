@@ -76,16 +76,18 @@ merge-undo
 ```
 ## ⚙️ Developer Setup  
 
-1. Clone the repo into your home folder and checkout `nova-dev`:
+1. Clone the repo into your home folder and checkout `nova-dev`, then run setup.sh:
 
 ```bash
 git clone https://github.com/sharpie78/nova.git
 cd nova
 git checkout nova-dev
+cd nova/setup
+chmod +x setup.sh
+sudo ./setup.sh
 ```  
-2. you'll still need to run setup.sh
 
-3. Set up Tauri manually see below or run the tauri_setup.sh file in setup folder.
+2. Set up Tauri manually see below or run the tauri_setup.sh file in setup folder.
    - Install Rust via rustup  
    - Install NVM and Node.js v22  
    - Ensure npm and npx are available  

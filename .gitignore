@@ -30,9 +30,16 @@ logs/
 .DS_Store
 .Trash-1000/
 
-# Ignore all src-tauri folders
-src-tauri/
-**/src-tauri/
+# Ignore all src-tauri folders except necvssary files for nova-dev
+frontend/nova-ui/src-tauri/**
+!frontend/nova-ui/src-tauri/tauri.conf.json
+!frontend/nova-ui/src-tauri/capabilities/
+!frontend/nova-ui/src-tauri/capabilities/default.json
+
+frontend/nova-editor/src-tauri/**
+!frontend/nova-editor/src-tauri/tauri.conf.json
+!frontend/nova-editor/src-tauri/capabilities/
+!frontend/nova-editor/src-tauri/capabilities/default.json
 
 # Ignore editor + UI metadata and lock files
 frontend/nova-editor/.gitignore
