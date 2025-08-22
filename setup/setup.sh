@@ -88,11 +88,12 @@ if ! command -v python3.10 >/dev/null 2>&1; then
     neofetch \
     wmctrl \
     curl \
-    wget
+    wget \
+    jq
   ok "Python 3.10 and deps installed."
 else
   info "Python3.10 present. Ensuring deps..."
-  apt install -y python3-pyqt6 python3.10-distutils python3-pyaudio neofetch wmctrl curl wget
+  apt install -y python3-pyqt6 python3.10-distutils python3-pyaudio neofetch wmctrl curl wget jq
   ok "Deps ensured."
 fi
 
@@ -294,7 +295,73 @@ echo -e "  ${YELLOW}multi-voice:${NC} $(model_name "$VOICE_BASE/vctk")"
 ok "Piper TTS models step complete."
 
 # =========================
-# 7) novatray user service
+# 7) Download latest AppImages (pattern match)
+# =========================
+info "Downloading latest AppImages…"
+
+FRONTEND_DIR="$TARGET_HOME/nova/frontend"
+mkdir -p "$FRONTEND_DIR"
+chown "$TARGET_USER":"$TARGET_USER" "$FRONTEND_DIR" || true
+
+REPO="sharpie78/nova"   # owner/repo
+
+get_latest_asset_url() {
+  # usage: get_latest_asset_url <pattern>
+  local pattern="$1"
+  # Optional: use a GitHub token if present to avoid rate limits
+  local hdr=()
+  [ -n "${GITHUB_TOKEN:-}" ] && hdr=(-H "Authorization: Bearer $GITHUB_TOKEN")
+
+  if command -v jq >/dev/null 2>&1; then
+    curl -s "${hdr[@]}" -H "Accept: application/vnd.github+json" \
+      "https://api.github.com/repos/${REPO}/releases/latest" \
+    | jq -r '.assets[].browser_download_url | select(test("'"$pattern"'", "i"))'
+  else
+    curl -s "${hdr[@]}" -H "Accept: application/vnd.github+json" \
+      "https://api.github.com/repos/${REPO}/releases/latest" \
+    | grep -i '"browser_download_url"' \
+    | grep -i "$pattern" \
+    | sed -E 's/.*"browser_download_url": *"([^"]+)".*/\1/'
+  fi
+}
+
+download_latest_appimage() {
+  # usage: download_latest_appimage <pattern> <stable_outfile>
+  local pattern="$1" out="$2" url rc=1
+
+  url=$(get_latest_asset_url "$pattern" | head -n1 || true)
+  if [ -z "$url" ]; then
+    warn "No asset found matching: $pattern"
+    return 1
+  fi
+
+  info "Fetching $(basename "$out") from: $url"
+  if curl -fL --retry 3 --retry-all-errors -o "$out.part" "$url"; then
+    chmod +x "$out.part"
+    if [ -s "$out" ] && cmp -s "$out.part" "$out"; then
+      rm -f "$out.part"
+      ok "$(basename "$out") is already up to date"
+      rc=0
+    else
+      mv -f "$out.part" "$out"
+      chown "$TARGET_USER":"$TARGET_USER" "$out" || true
+      ok "Updated $(basename "$out")"
+      rc=0
+    fi
+  else
+    warn "Download failed for pattern: $pattern"
+    rm -f "$out.part" 2>/dev/null || true
+    rc=1
+  fi
+  return $rc
+}
+
+download_latest_appimage "nova-editor.*\\.AppImage$" "$FRONTEND_DIR/nova-editor.AppImage"
+download_latest_appimage "nova-ui.*\\.AppImage$"    "$FRONTEND_DIR/nova-ui.AppImage"
+
+
+# =========================
+# 8) novatray user service
 # =========================
 SERVICE_DIR="$TARGET_HOME/.config/systemd/user"
 SERVICE_FILE="$SERVICE_DIR/novatray.service"

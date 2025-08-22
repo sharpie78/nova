@@ -48,6 +48,7 @@ frontend/nova-ui/package-lock.json
 
 bfg.jar
 
+config/jack.settings.json
 config/admin.settings.json
 config/users.json
 
