@@ -54,8 +54,7 @@ Reload your shell RC (zsh ok; bash ignored):
 . "$HOME/.zshrc" 2>/dev/null || true
 ```
 
-### About `. "$HOME/.nvm/nvm.sh"`
-That line from the website is just “source NVM now.” You don’t need it if `nvm` already works after sourcing your RC. If you see `nvm: command not found`, then run:
+Source NVM now
 ```bash
 . "$HOME/.nvm/nvm.sh"
 ```
@@ -149,25 +148,25 @@ git restore frontend
 
 # Run / Build
 
-## nova-ui (dev)
+## Run nova-ui (dev)
 ```bash
 cd $HOME/nova/frontend/nova-ui
 npx tauri dev
 ```
 
-## nova-ui (AppImage)
+## Build nova-ui (AppImage)
 ```bash
 cd $HOME/nova/frontend/nova-ui
 npx tauri build
 ```
 
-## nova-editor (dev)
+## Run nova-editor (dev)
 ```bash
 cd $HOME/nova/frontend/nova-editor
 npx tauri dev
 ```
 
-## nova-editor (AppImage)
+## Build nova-editor (AppImage)
 ```bash
 cd $HOME/nova/frontend/nova-editor
 npx tauri build
