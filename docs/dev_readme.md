@@ -74,6 +74,7 @@ and then run the alias
 ```bash
 merge-undo
 ```
+
 ## ⚙️ Developer Setup  
 
 1. Clone the repo into your home folder and checkout `nova-dev`, then run setup.sh:
@@ -87,27 +88,17 @@ chmod +x setup.sh
 sudo ./setup.sh
 ```  
 
-2. Set up Tauri manually see below or run the tauri_setup.sh file in setup folder.
-   - Install Rust via rustup  
-   - Install NVM and Node.js v22  
-   - Ensure npm and npx are available  
-   - Install required system libs (`libwebkit2gtk`, etc.)  
+2. Set up Tauri manually see [dev_tauri_setup.md](dev_tauri_setup.md)
 
-4. Install frontend deps and run with Tauri:
+...or...
 
-For **nova-editor**:  
+run the tauri_setup.sh file in setup folder.
+
 ```bash
-cd frontend/nova-editor
-npm install
-npx tauri dev
-```  
-
-For **nova-ui**:  
-```bash
-cd frontend/nova-ui
-npm install
-npx tauri dev
-```  
+cd $HOME/nova/setup
+chmod +x tauri_setup.sh
+./tauri_setup.sh
+```
 
 ---
 
