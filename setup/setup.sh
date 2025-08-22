@@ -89,11 +89,12 @@ if ! command -v python3.10 >/dev/null 2>&1; then
     neofetch \
     wmctrl \
     curl \
-    wget
+    wget \
+    jq
   ok "Python 3.10 and deps installed."
 else
   info "Python3.10 present. Ensuring deps..."
-  apt install -y python3-pyqt6 python3.10-distutils python3-pyaudio neofetch wmctrl curl wget
+  apt install -y python3-pyqt6 python3.10-distutils python3-pyaudio neofetch wmctrl curl wget jq
   ok "Deps ensured."
 fi
 
@@ -297,53 +298,57 @@ ok "Piper TTS models step complete."
 
 
 # =========================
-# 7) Download AppImages
+# 7) Download latest AppImages (pattern match)
 # =========================
-info "Downloading AppImages to frontend…"
+info "Downloading latest AppImages…"
 
 FRONTEND_DIR="$TARGET_HOME/nova/frontend"
 mkdir -p "$FRONTEND_DIR"
 chown "$TARGET_USER":"$TARGET_USER" "$FRONTEND_DIR" || true
 
-download_appimage() {
-  # usage: download_appimage <outfile> <url1> [url2 url3 ...]
-  local out="$1"; shift
-  local name; name=$(basename "$out")
+REPO="sharpie78/nova"   # owner/repo
 
-  if [ -s "$out" ]; then
-    info "Already have $name"
-    return 0
+get_latest_asset_url() {
+  local pattern="$1"
+  local hdr=()
+  [ -n "${GITHUB_TOKEN:-}" ] && hdr=(-H "Authorization: Bearer $GITHUB_TOKEN")
+
+  if command -v jq >/dev/null 2>&1; then
+    curl -s "${hdr[@]}" -H "Accept: application/vnd.github+json" \
+      "https://api.github.com/repos/${REPO}/releases/latest" |
+      jq --arg re "$pattern" -r '.assets[]
+        | select(.name | test($re; "i"))
+        | .browser_download_url'
+  else
+    curl -s "${hdr[@]}" -H "Accept: application/vnd.github+json" \
+      "https://api.github.com/repos/${REPO}/releases/latest" |
+      grep -i '"browser_download_url"' | grep -Ei "$pattern" |
+      sed -E 's/.*"browser_download_url": *"([^"]+)".*/\1/'
   fi
-
-  # try each URL until one works
-  local url tmp_rc=1
-  for url in "$@"; do
-    info "Downloading $name… ($url)"
-    if curl -fL --retry 3 --retry-all-errors -o "$out.part" "$url"; then
-      chmod +x "$out.part"
-      mv -f "$out.part" "$out"
-      chown "$TARGET_USER":"$TARGET_USER" "$out" || true
-      ok "$name downloaded"
-      tmp_rc=0
-      break
-    else
-      warn "Failed from: $url"
-      rm -f "$out.part" 2>/dev/null || true
-    fi
-  done
-
-  if [ $tmp_rc -ne 0 ]; then
-    warn "Could not download $name from any source (skipping)."
-  fi
-  return $tmp_rc
 }
 
-# Candidate URLs: pinned tag, and 'latest' redirect
-download_appimage "$FRONTEND_DIR/nova-editor.AppImage" \
-  "https://github.com/sharpie78/nova/releases/latest/download/nova-editor.AppImage"
 
-download_appimage "$FRONTEND_DIR/nova-ui.AppImage" \
-  "https://github.com/sharpie78/nova/releases/latest/download/nova-ui.AppImage"
+download_latest_appimage() {
+  local pattern="$1" out="$2" url rc=1
+  url=$(get_latest_asset_url "$pattern" | head -n1 || true)
+  if [ -z "$url" ]; then warn "No asset found matching: $pattern"; return 1; fi
+  info "Fetching $(basename "$out") from: $url"
+  if curl -fL --retry 3 --retry-all-errors -o "$out.part" "$url"; then
+    chmod +x "$out.part"
+    if [ -s "$out" ] && cmp -s "$out.part" "$out"; then
+      rm -f "$out.part"; ok "$(basename "$out") is already up to date"; rc=0
+    else
+      mv -f "$out.part" "$out"; chown "$TARGET_USER":"$TARGET_USER" "$out" || true
+      ok "Updated $(basename "$out")"; rc=0
+    fi
+  else
+    warn "Download failed for pattern: $pattern"; rm -f "$out.part" 2>/dev/null || true; rc=1
+  fi
+  return $rc
+}
+
+download_latest_appimage "nova-editor.*\\.AppImage$" "$FRONTEND_DIR/nova-editor.AppImage"
+download_latest_appimage "nova-ui.*\\.AppImage$"    "$FRONTEND_DIR/nova-ui.AppImage"
 
 
 
