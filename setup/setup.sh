@@ -306,24 +306,26 @@ chown "$TARGET_USER":"$TARGET_USER" "$FRONTEND_DIR" || true
 REPO="sharpie78/nova"   # owner/repo
 
 get_latest_asset_url() {
-  # usage: get_latest_asset_url <pattern>
   local pattern="$1"
-  # Optional: use a GitHub token if present to avoid rate limits
   local hdr=()
   [ -n "${GITHUB_TOKEN:-}" ] && hdr=(-H "Authorization: Bearer $GITHUB_TOKEN")
 
   if command -v jq >/dev/null 2>&1; then
     curl -s "${hdr[@]}" -H "Accept: application/vnd.github+json" \
-      "https://api.github.com/repos/${REPO}/releases/latest" \
-    | jq -r '.assets[].browser_download_url | select(test("'"$pattern"'", "i"))'
+      "https://api.github.com/repos/${REPO}/releases/latest" |
+      jq --arg re "$pattern" -r '
+        .assets[]
+        | select(.name | test($re; "i"))
+        | .browser_download_url
+      '
   else
     curl -s "${hdr[@]}" -H "Accept: application/vnd.github+json" \
-      "https://api.github.com/repos/${REPO}/releases/latest" \
-    | grep -i '"browser_download_url"' \
-    | grep -i "$pattern" \
-    | sed -E 's/.*"browser_download_url": *"([^"]+)".*/\1/'
+      "https://api.github.com/repos/${REPO}/releases/latest" |
+      grep -i '"browser_download_url"' | grep -Ei "$pattern" |
+      sed -E 's/.*"browser_download_url": *"([^"]+)".*/\1/'
   fi
 }
+
 
 download_latest_appimage() {
   # usage: download_latest_appimage <pattern> <stable_outfile>

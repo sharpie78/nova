@@ -58,4 +58,4 @@ config/users.json
 
 # Voice/ML models (downloaded by setup, not tracked)
 backend/audio/tts/models/
-backend/audio/tts/voices/
+backend/audio/voices/
