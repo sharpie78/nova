@@ -15,7 +15,7 @@ from utils.logger import logger, setup_logger
 setup_logger()
 logger = logger.bind(name="Tray")
 
-project_dir = Path.home() / "nova" / "frontend" / "nova-ui"
+nova_ui_dir = Path.home() / "nova" / "frontend" / "nova-ui"
 
 webUI_pid = None
 web_ui_open = False  # Track WebUI state (open/closed)
@@ -98,7 +98,7 @@ def open_webUI(api_server_action, launch_ui_action, icons):
         else:
             logger.debug("API server is already running.")
 
-        process = subprocess.Popen(["npx", "tauri", "dev"], cwd=str(project_dir))
+        process = subprocess.Popen(["npx", "tauri", "dev"], cwd=str(nova_ui_dir))
         webUI_pid = process.pid
 
         with open("/tmp/webUI_pid.txt", "w") as file:

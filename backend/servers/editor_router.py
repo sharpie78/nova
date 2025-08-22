@@ -11,6 +11,8 @@ EditorRouter = APIRouter()
 
 HOME = Path.home()
 
+nova_editor_dir = Path.home() / "nova" / "frontend" / "nova-editor"
+
 PROJECTS_DIR = HOME / "nova" / "vault" / "projects"
 
 VAULT_DIR = HOME / "nova" / "vault"
@@ -191,13 +193,12 @@ def inject_text(request: InjectTextRequest):
 def launch_editor():
     global editor_pid
     try:
-        process = subprocess.Popen(
-            ["npx", "tauri", "dev"],
-            cwd="/home/jack/nova/frontend/nova-editor",
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
+        process = subprocess.Popen(["npx", "tauri", "dev"], cwd=str(nova_editor_dir))
         editor_pid = process.pid
+
+        with open("/tmp/editor_pid.txt", "w") as file:
+            file.write(str(editor_pid))
+
         return JSONResponse(content={"status": "launched", "pid": editor_pid})
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
