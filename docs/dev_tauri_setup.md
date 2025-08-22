@@ -147,6 +147,7 @@ git restore frontend
 ---
 
 # Run / Build
+The Apps will be launchable via tray app for nova-ui and via chat page for nova-editor. If you want ro run them independently or build the AppImage use the instructions below
 
 ## Run nova-ui (dev)
 ```bash
