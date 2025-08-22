@@ -34,9 +34,20 @@ The script will:
 - Enable the tray app (systemd service)  
 
 After install, you’ll have a tray icon to start interacting with Nova.  
+The first run may take a while, and you’ll need to **respond to some prompts**.  
+If you want the latest version of the project, run the following:
+
+
+```bash
+cd $HOME/nova
+git pull origin main
+cd setup
+chmod +x setup.sh
+sudo ./setup.sh
+```
 
 ## Usage  
-- Nova runs from the tray app (auto-start at boot if enabled).  
+- Nova runs from the tray app (auto-start at boot by default).  
 - You can also access the UI in a browser at:  
   [http://127.0.0.1:56969/index.html](http://127.0.0.1:56969/index.html) *(planned, not yet working)*  
 
