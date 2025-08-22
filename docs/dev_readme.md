@@ -54,13 +54,26 @@ source ~/.zshrc
 ```
 - ### 🛑 Undo last merge (if something went wrong)
 
-If the alias was run and you need to roll back the last merge, run:
+If the alias above was run and you need to roll back the last merge, run:
 
 ```bash
 git reset --hard HEAD~1
 git push origin main --force
 ```
+or
 
+```bash
+if ! grep -q "merge-undo" ~/.zshrc; then
+  echo "alias merge-undo='git reset --hard HEAD~1 && git push origin main --force'" >> ~/.zshrc
+fi
+
+source ~/.zshrc
+```
+and then run the alias
+
+```bash
+merge-undo
+```
 ## ⚙️ Developer Setup  
 
 1. Clone the repo into your home folder and checkout `nova-dev`:
