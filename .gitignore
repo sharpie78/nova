@@ -55,3 +55,8 @@ config/users.json
 
 # AppImage builds
 *.AppImage
+
+# Voice/ML models (downloaded by setup, not tracked)
+backend/audio/tts/models/
+backend/audio/tts/voices/
+
